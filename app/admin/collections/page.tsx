@@ -62,7 +62,9 @@ export default function CollectionsPage() {
   const { data: brandData } = useSWR<Brand[]>('/api/admin/brand', fetcher);
 
   const collections: Collection[] = Array.isArray(data) ? data : [];
-  const brands: Brand[] = Array.isArray(brandData) ? brandData : [];
+  const brands: Brand[] = Array.isArray(brandData)
+    ? [...brandData].sort((a, b) => a.brand_name.localeCompare(b.brand_name))
+    : [];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editing, setEditing] = useState<Collection | null>(null);
@@ -258,6 +260,7 @@ export default function CollectionsPage() {
       key: 'brand_name',
       filters: brandFilters,
       onFilter: (value, record) => record.brand_name === value,
+      sorter: (a, b) => (a.brand_name || '').localeCompare(b.brand_name || ''),
     },
     {
       title: 'Material',
@@ -293,11 +296,12 @@ export default function CollectionsPage() {
       title: 'Link',
       dataIndex: 'link',
       key: 'link',
+      width: 200,
       ...getColumnSearchProps('link'),
       render: (url: string) =>
         url ? (
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            {url}
+          <a href={url} target="_blank" rel="noopener noreferrer" title={url}>
+            {url.length > 17 ? url.substring(0, 17) + '...' : url}
           </a>
         ) : (
           '-'
@@ -307,11 +311,12 @@ export default function CollectionsPage() {
       title: 'Relate',
       dataIndex: 'relate_link',
       key: 'relate_link',
+      width: 200,
       ...getColumnSearchProps('relate_link'),
       render: (url: string) =>
         url ? (
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            {url}
+          <a href={url} target="_blank" rel="noopener noreferrer" title={url}>
+            {url.length > 17 ? url.substring(0, 17) + '...' : url}
           </a>
         ) : (
           '-'
@@ -365,7 +370,12 @@ export default function CollectionsPage() {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={collections} rowKey="collection_id" />
+      <Table
+        columns={columns}
+        dataSource={collections}
+        rowKey="collection_id"
+        scroll={{ x: 1400 }}
+      />
 
       <Modal
         title={editing ? 'Edit Collection' : 'Add Collection'}
