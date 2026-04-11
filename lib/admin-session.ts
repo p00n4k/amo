@@ -37,11 +37,34 @@ export async function verifyAdminToken(token: string) {
   }
 }
 
-export function getAdminCookieOptions() {
+function shouldUseSecureCookie(request?: Request) {
+  if (!request) {
+    return process.env.NODE_ENV === 'production';
+  }
+
+  const forwardedProto = request.headers.get('x-forwarded-proto');
+  if (forwardedProto) {
+    return forwardedProto.split(',')[0].trim() === 'https';
+  }
+
+  const url = new URL(request.url);
+  const isLocalhost =
+    url.hostname === 'localhost' ||
+    url.hostname === '127.0.0.1' ||
+    url.hostname === '::1';
+
+  if (isLocalhost) {
+    return false;
+  }
+
+  return url.protocol === 'https:';
+}
+
+export function getAdminCookieOptions(request?: Request) {
   return {
     httpOnly: true,
     sameSite: 'lax' as const,
-    secure: process.env.NODE_ENV === 'production',
+    secure: shouldUseSecureCookie(request),
     path: '/',
     maxAge: ADMIN_TOKEN_DURATION_SECONDS,
   };

@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       },
     });
 
-    response.cookies.set(ADMIN_TOKEN_COOKIE, token, getAdminCookieOptions());
+    response.cookies.set(ADMIN_TOKEN_COOKIE, token, getAdminCookieOptions(req));
     return response;
   } catch (error: any) {
     console.error('POST /api/admin/login error:', error);
