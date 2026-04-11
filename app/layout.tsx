@@ -8,13 +8,15 @@ import type { ReactNode } from "react";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith("/admin");
 
   // ✅ path ที่ต้องการซ่อน navbar แบบเจาะจง
   const noNavbarPaths = ["/productsearch", "/projectdetail", "/brands"];
 
   // ✅ ซ่อน navbar เมื่อ path เป็น /admin หรือ /admin/*
   const hideNavbar =
-    noNavbarPaths.includes(pathname) || pathname.startsWith("/admin");
+    noNavbarPaths.includes(pathname) || isAdminRoute;
+  const hideFooter = isAdminRoute;
 
   return (
     <html>
@@ -31,8 +33,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
           {children}
         </main>
 
-        {/* ✅ Footer ยังแสดงทุกหน้า */}
-        <Footer />
+        {/* ✅ ซ่อน footer ในหน้า admin */}
+        {!hideFooter && <Footer />}
       </body>
     </html>
   );

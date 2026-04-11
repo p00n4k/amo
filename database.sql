@@ -13,6 +13,21 @@ CREATE TABLE IF NOT EXISTS home_sliders (
     INDEX idx_display_order (display_order)
 );
 
+-- 1.1 ตาราง admin_users
+CREATE TABLE IF NOT EXISTS admin_users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password_hash CHAR(64) NOT NULL,
+    display_name VARCHAR(100) NULL,
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- ตัวอย่าง seed admin account
+-- INSERT INTO admin_users (username, password_hash, display_name)
+-- VALUES ('admin', SHA2('change-this-password', 256), 'Administrator');
+
 -- 2. ตาราง brands
 CREATE TABLE IF NOT EXISTS brands (
     brand_id INT PRIMARY KEY AUTO_INCREMENT,

@@ -53,9 +53,8 @@ export default function ProductPage() {
                         src={img}
                         alt={product.collection_name}
                         fill
-                        className={`object-cover absolute inset-0 transition-opacity duration-1000 ${
-                            index === currentIndex ? "opacity-100" : "opacity-0"
-                        }`}
+                        className={`object-cover absolute inset-0 transition-opacity duration-1000 ${index === currentIndex ? "opacity-100" : "opacity-0"
+                            }`}
                     />
                 ))}
 
@@ -74,7 +73,7 @@ export default function ProductPage() {
                             href={
                                 product?.link
                                     ? product.link.startsWith("http://") ||
-                                      product.link.startsWith("https://")
+                                        product.link.startsWith("https://")
                                         ? product.link
                                         : `https://${product.link}`
                                     : "#"
@@ -136,10 +135,10 @@ export default function ProductPage() {
                     />
 
                     {/* Gradient Overlay */}
-                
+
 
                     {/* ✅ Brands Button */}
-                    
+
                 </div>
             </div>
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Layout, Menu, Button, theme } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import {
     HomeOutlined,
     PictureOutlined,
@@ -11,10 +11,11 @@ import {
     ShopOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
+    LogoutOutlined,
     TagsOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const { Header, Sider, Content } = Layout;
 
@@ -24,10 +25,27 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     const [collapsed, setCollapsed] = useState(false);
+    const [loggingOut, setLoggingOut] = useState(false);
     const pathname = usePathname();
-    const {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
+    const router = useRouter();
+
+    async function handleLogout() {
+        setLoggingOut(true);
+
+        try {
+            await fetch('/api/admin/logout', {
+                method: 'POST',
+            });
+        } finally {
+            router.push('/admin/login');
+            router.refresh();
+            setLoggingOut(false);
+        }
+    }
+
+    if (pathname === '/admin/login') {
+        return <>{children}</>;
+    }
 
     const menuItems = [
         {
@@ -73,18 +91,12 @@ export default function AdminLayout({
     ];
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout className="min-h-screen">
             <Sider trigger={null} collapsible collapsed={collapsed} width={250}>
                 <div
-                    style={{
-                        height: 64,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'white',
-                        fontSize: collapsed ? 16 : 20,
-                        fontWeight: 'bold',
-                    }}
+                    className={`flex h-16 items-center justify-center font-bold text-white ${
+                        collapsed ? 'text-base' : 'text-xl'
+                    }`}
                 >
                     {collapsed ? 'AMO' : 'AMO Admin'}
                 </div>
@@ -96,27 +108,26 @@ export default function AdminLayout({
                 />
             </Sider>
             <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
-                    <Button
-                        type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: '16px',
-                            width: 64,
-                            height: 64,
-                        }}
-                    />
+                <Header className="bg-white p-0">
+                    <div className="flex h-16 items-center justify-between pr-4">
+                        <Button
+                            type="text"
+                            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                            onClick={() => setCollapsed(!collapsed)}
+                            className="h-16 w-16 text-base"
+                        />
+                        <div>
+                            <Button
+                                icon={<LogoutOutlined />}
+                                onClick={handleLogout}
+                                loading={loggingOut}
+                            >
+                                Logout
+                            </Button>
+                        </div>
+                    </div>
                 </Header>
-                <Content
-                    style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        minHeight: 280,
-                        background: colorBgContainer,
-                        borderRadius: borderRadiusLG,
-                    }}
-                >
+                <Content className="m-4 min-h-[280px] rounded-xl bg-white p-6 md:m-6">
                     {children}
                 </Content>
             </Layout>
