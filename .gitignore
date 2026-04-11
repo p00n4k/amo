@@ -41,3 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 public/uploads
+
+database.sql
+database.sql
+database.sql
+*.sql
