@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Table,
   Button,
@@ -16,9 +16,7 @@ import {
   Popconfirm,
   Upload,
 } from 'antd';
-import type { InputRef } from 'antd';
-import type { ColumnsType, ColumnType } from 'antd/es/table';
-import type { FilterConfirmProps } from 'antd/es/table/interface';
+import type { ColumnsType } from 'antd/es/table';
 import {
   PlusOutlined,
   EditOutlined,
@@ -28,6 +26,7 @@ import {
 } from '@ant-design/icons';
 import useSWR from 'swr';
 import axios from 'axios';
+import styles from './page.module.css';
 
 const { Title } = Typography;
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -52,7 +51,19 @@ interface Brand {
   brand_name: string;
 }
 
-type DataIndex = keyof Collection;
+interface SearchFilters {
+  collection_name: string;
+  material_type: string;
+  brand_name: string;
+  type: '' | 'Surface' | 'Furniture' | 'Other';
+}
+
+const EMPTY_SEARCH_FILTERS: SearchFilters = {
+  collection_name: '',
+  material_type: '',
+  brand_name: '',
+  type: '',
+};
 
 export default function CollectionsPage() {
   // ✅ use ONE endpoint for CRUD (matches your route.ts)
@@ -72,10 +83,70 @@ export default function CollectionsPage() {
 
   const [uploading, setUploading] = useState(false);
 
-  // column search
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState<DataIndex | ''>('');
-  const searchInput = useRef<InputRef>(null);
+  const [searchFilters, setSearchFilters] = useState<SearchFilters>(EMPTY_SEARCH_FILTERS);
+  const [appliedFilters, setAppliedFilters] = useState<SearchFilters>(EMPTY_SEARCH_FILTERS);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+  const topScrollbarRef = useRef<HTMLDivElement>(null);
+  const topScrollbarInnerRef = useRef<HTMLDivElement>(null);
+
+  const handleApplySearch = () => {
+    setAppliedFilters({
+      collection_name: searchFilters.collection_name.trim().toLowerCase(),
+      material_type: searchFilters.material_type.trim().toLowerCase(),
+      brand_name: searchFilters.brand_name.trim().toLowerCase(),
+      type: searchFilters.type,
+    });
+  };
+
+  const handleResetSearch = () => {
+    setSearchFilters(EMPTY_SEARCH_FILTERS);
+    setAppliedFilters(EMPTY_SEARCH_FILTERS);
+  };
+
+  useEffect(() => {
+    const tableContent = tableContainerRef.current?.querySelector('.ant-table-content') as HTMLDivElement | null;
+    const topScrollbar = topScrollbarRef.current;
+    const topScrollbarInner = topScrollbarInnerRef.current;
+
+    if (!tableContent || !topScrollbar || !topScrollbarInner) return;
+
+    let syncing = false;
+
+    const syncTopWidth = () => {
+      topScrollbarInner.style.width = `${tableContent.scrollWidth}px`;
+    };
+
+    const onTopScroll = () => {
+      if (syncing) return;
+      syncing = true;
+      tableContent.scrollLeft = topScrollbar.scrollLeft;
+      syncing = false;
+    };
+
+    const onBottomScroll = () => {
+      if (syncing) return;
+      syncing = true;
+      topScrollbar.scrollLeft = tableContent.scrollLeft;
+      syncing = false;
+    };
+
+    syncTopWidth();
+    topScrollbar.scrollLeft = tableContent.scrollLeft;
+
+    topScrollbar.addEventListener('scroll', onTopScroll);
+    tableContent.addEventListener('scroll', onBottomScroll);
+
+    const resizeObserver = new ResizeObserver(syncTopWidth);
+    resizeObserver.observe(tableContent);
+    window.addEventListener('resize', syncTopWidth);
+
+    return () => {
+      topScrollbar.removeEventListener('scroll', onTopScroll);
+      tableContent.removeEventListener('scroll', onBottomScroll);
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', syncTopWidth);
+    };
+  }, [collections.length]);
 
   // ✅ Upload image to /api/admin/upload
   const handleUpload = async (file: File) => {
@@ -152,64 +223,24 @@ export default function CollectionsPage() {
     }
   };
 
-  // ✅ column search helper
-  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<Collection> => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
-      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${String(dataIndex)}`}
-          value={(selectedKeys[0] as string) || ''}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => {
-            confirm();
-            setSearchText((selectedKeys[0] as string) || '');
-            setSearchedColumn(dataIndex);
-          }}
-          style={{ marginBottom: 8, display: 'block' }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            icon={<SearchOutlined />}
-            size="small"
-            onClick={() => {
-              confirm();
-              setSearchText((selectedKeys[0] as string) || '');
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            size="small"
-            onClick={() => {
-              clearFilters?.();
-              setSearchText('');
-              setSearchedColumn('');
-              confirm({ closeDropdown: false } as FilterConfirmProps);
-            }}
-          >
-            Reset
-          </Button>
-          <Button size="small" type="link" onClick={() => close()}>
-            Close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
-    ),
-    onFilter: (value, record) => {
-      const v = String(value || '').toLowerCase();
-      const field = String(record[dataIndex] ?? '').toLowerCase();
-      return field.includes(v);
-    },
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) setTimeout(() => searchInput.current?.select?.(), 100);
-    },
-  });
+  const filteredCollections = useMemo(() => {
+    const hasAnyFilter = Object.values(appliedFilters).some(Boolean);
+    if (!hasAnyFilter) return collections;
+
+    const includesFilter = (fieldValue: string, filterValue: string) => {
+      if (!filterValue) return true;
+      return String(fieldValue || '').toLowerCase().includes(filterValue);
+    };
+
+    return collections.filter((item) => {
+      return (
+        includesFilter(item.collection_name, appliedFilters.collection_name) &&
+        includesFilter(item.material_type, appliedFilters.material_type) &&
+        includesFilter(item.brand_name, appliedFilters.brand_name) &&
+        includesFilter(item.type, appliedFilters.type.toLowerCase())
+      );
+    });
+  }, [collections, appliedFilters]);
 
   // quick filters from data
   const brandFilters = useMemo(() => {
@@ -249,10 +280,9 @@ export default function CollectionsPage() {
         ),
     },
     {
-      title: 'Name',
+      title: 'Collection',
       dataIndex: 'collection_name',
       key: 'collection_name',
-      ...getColumnSearchProps('collection_name'),
     },
     {
       title: 'Brand',
@@ -263,7 +293,7 @@ export default function CollectionsPage() {
       sorter: (a, b) => (a.brand_name || '').localeCompare(b.brand_name || ''),
     },
     {
-      title: 'Material',
+      title: 'Item',
       dataIndex: 'material_type',
       key: 'material_type',
       filters: materialFilters,
@@ -297,7 +327,6 @@ export default function CollectionsPage() {
       dataIndex: 'link',
       key: 'link',
       width: 200,
-      ...getColumnSearchProps('link'),
       render: (url: string) =>
         url ? (
           <a href={url} target="_blank" rel="noopener noreferrer" title={url}>
@@ -312,7 +341,6 @@ export default function CollectionsPage() {
       dataIndex: 'relate_link',
       key: 'relate_link',
       width: 200,
-      ...getColumnSearchProps('relate_link'),
       render: (url: string) =>
         url ? (
           <a href={url} target="_blank" rel="noopener noreferrer" title={url}>
@@ -328,7 +356,6 @@ export default function CollectionsPage() {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      ...getColumnSearchProps('description'),
       ellipsis: true,
       width: 260,
     },
@@ -338,6 +365,7 @@ export default function CollectionsPage() {
       title: 'Actions',
       key: 'actions',
       width: 150,
+      fixed: 'right',
       render: (_: any, record: Collection) => (
         <Space>
           <Button
@@ -370,12 +398,75 @@ export default function CollectionsPage() {
         </Button>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={collections}
-        rowKey="collection_id"
-        scroll={{ x: 1400 }}
-      />
+      <div className={styles.searchToolbar}>
+        <div className={styles.searchGrid}>
+          <Input
+            value={searchFilters.collection_name}
+            onChange={(e) =>
+              setSearchFilters((prev) => ({ ...prev, collection_name: e.target.value }))
+            }
+            onPressEnter={handleApplySearch}
+            placeholder="Collection"
+          />
+          <Input
+            value={searchFilters.material_type}
+            onChange={(e) =>
+              setSearchFilters((prev) => ({ ...prev, material_type: e.target.value }))
+            }
+            onPressEnter={handleApplySearch}
+            placeholder="Item"
+          />
+          <Select
+            showSearch
+            allowClear
+            value={searchFilters.brand_name || undefined}
+            placeholder="Brand"
+            optionFilterProp="label"
+            options={brands.map((brand) => ({ label: brand.brand_name, value: brand.brand_name }))}
+            onChange={(value) =>
+              setSearchFilters((prev) => ({ ...prev, brand_name: value || '' }))
+            }
+          />
+          <Select
+            showSearch
+            allowClear
+            value={searchFilters.type || undefined}
+            placeholder="Type"
+            optionFilterProp="label"
+            options={[
+              { label: 'Surface', value: 'Surface' },
+              { label: 'Furniture', value: 'Furniture' },
+              { label: 'Other', value: 'Other' },
+            ]}
+            onChange={(value) =>
+              setSearchFilters((prev) => ({ ...prev, type: (value || '') as SearchFilters['type'] }))
+            }
+          />
+        </div>
+        <div className={styles.searchActions}>
+          <Button type="primary" size="large" icon={<SearchOutlined />} onClick={handleApplySearch}>
+            Search
+          </Button>
+          <Button size="large" onClick={handleResetSearch}>
+            Reset
+          </Button>
+        </div>
+      </div>
+
+      <div className={styles.tableScrollWrapper}>
+        <div ref={topScrollbarRef} className={styles.topScrollbar}>
+          <div ref={topScrollbarInnerRef} className={styles.topScrollbarInner} />
+        </div>
+
+        <div ref={tableContainerRef} className={styles.tableContainer}>
+          <Table
+            columns={columns}
+            dataSource={filteredCollections}
+            rowKey="collection_id"
+            scroll={{ x: 'max-content' }}
+          />
+        </div>
+      </div>
 
       <Modal
         title={editing ? 'Edit Collection' : 'Add Collection'}
@@ -393,7 +484,7 @@ export default function CollectionsPage() {
           </Form.Item>
 
           <Form.Item
-            label="Collection Name"
+            label="Collection Collection"
             name="collection_name"
             rules={[{ required: true, message: 'Please input collection name!' }]}
           >
@@ -411,7 +502,7 @@ export default function CollectionsPage() {
             </Select>
           </Form.Item>
 
-          <Form.Item label="Material Type" name="material_type" rules={[{ required: true }]}>
+          <Form.Item label="Item Type" name="material_type" rules={[{ required: true }]}>
             <Input placeholder="e.g., Porcelain, Ceramic, Wood" />
           </Form.Item>
 

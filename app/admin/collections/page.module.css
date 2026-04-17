@@ -1,0 +1,53 @@
+.tableScrollWrapper {
+  width: 100%;
+}
+
+.searchToolbar {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.searchGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.searchActions {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .searchGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .searchActions {
+    width: 100%;
+  }
+
+  .searchActions :global(.ant-btn) {
+    flex: 1;
+  }
+}
+
+.topScrollbar {
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.topScrollbarInner {
+  height: 1px;
+}
+
+.tableContainer :global(.ant-table-content) {
+  overflow-x: auto !important;
+}

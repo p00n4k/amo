@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
     Table,
     Button,
@@ -40,6 +40,7 @@ interface Project {
 
 interface Collection {
     collection_id: number;
+    collection_name: string;
     type: string;
     material_type: string;
     status: boolean;
@@ -63,6 +64,7 @@ export default function ProjectsPage() {
     const [editingProject, setEditingProject] = useState<Project | null>(null);
     const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
     const [selectedCollections, setSelectedCollections] = useState<number[]>([]);
+    const [initialSelectedCollections, setInitialSelectedCollections] = useState<number[]>([]);
     const [selectedProjectImages, setSelectedProjectImages] = useState<
         { image_id: number; image_url: string }[]
     >([]);
@@ -74,9 +76,11 @@ export default function ProjectsPage() {
 
     // ✅ Filters
     const [searchText, setSearchText] = useState('');
+    const [filterCollectionName, setFilterCollectionName] = useState<string | null>(null);
     const [filterBrand, setFilterBrand] = useState<string | null>(null);
     const [filterType, setFilterType] = useState<string | null>(null);
     const [filterMaterialType, setFilterMaterialType] = useState<string | null>(null);
+    const [collectionTablePage, setCollectionTablePage] = useState(1);
 
     // ✅ Add/Edit Project
     const showModal = (project?: Project) => {
@@ -128,7 +132,10 @@ export default function ProjectsPage() {
         try {
             setSelectedProjectId(project_id);
             const res = await axios.get(`/api/admin/projectcollection?project_id=${project_id}`);
-            setSelectedCollections(res.data.map((c: any) => c.collection_id));
+            const initialIds = res.data.map((c: any) => c.collection_id);
+            setSelectedCollections(initialIds);
+            setInitialSelectedCollections(initialIds);
+            setCollectionTablePage(1);
             setCollectionModalOpen(true);
         } catch (error) {
             console.error(error);
@@ -143,12 +150,22 @@ export default function ProjectsPage() {
                 collection_ids: selectedCollections,
             });
             message.success('Collections updated!');
-            setCollectionModalOpen(false);
+            handleCloseCollectionsModal();
         } catch (error) {
             console.error(error);
             message.error('Failed to update collections!');
         }
     };
+
+    const handleCloseCollectionsModal = () => {
+        setCollectionModalOpen(false);
+        setInitialSelectedCollections([]);
+        setCollectionTablePage(1);
+    };
+
+    useEffect(() => {
+        setCollectionTablePage(1);
+    }, [searchText, filterCollectionName, filterBrand, filterType, filterMaterialType]);
 
     // ✅ Image modal functions
     const openImageModal = async (project_id: number) => {
@@ -253,6 +270,7 @@ export default function ProjectsPage() {
 
     const collectionColumns = [
         { title: 'ID', dataIndex: 'collection_id', width: 70 },
+        { title: 'Collection Name', dataIndex: 'collection_name' },
         { title: 'Brand', dataIndex: 'brand_name' },
         { title: 'Type', dataIndex: 'type' },
         { title: 'Item', dataIndex: 'material_type' },
@@ -278,19 +296,39 @@ export default function ProjectsPage() {
     // ✅ Filter logic
     const filteredCollections = collections.filter((c) => {
         const matchesSearch =
+            c.collection_name.toLowerCase().includes(searchText.toLowerCase()) ||
             c.type.toLowerCase().includes(searchText.toLowerCase()) ||
             c.brand_name.toLowerCase().includes(searchText.toLowerCase()) ||
             c.material_type.toLowerCase().includes(searchText.toLowerCase());
 
         const matchesBrand = filterBrand ? c.brand_name === filterBrand : true;
+        const matchesCollectionName = filterCollectionName
+            ? c.collection_name === filterCollectionName
+            : true;
         const matchesType = filterType ? c.type === filterType : true;
         const matchesMaterialType = filterMaterialType
             ? c.material_type === filterMaterialType
             : true;
 
-        return matchesSearch && matchesBrand && matchesType && matchesMaterialType;
+        return (
+            matchesSearch &&
+            matchesCollectionName &&
+            matchesBrand &&
+            matchesType &&
+            matchesMaterialType
+        );
     });
 
+    const sortedCollections = useMemo(() => {
+        const selectedIds = new Set(initialSelectedCollections);
+        return [...filteredCollections].sort((a, b) => {
+            const aSelected = selectedIds.has(a.collection_id) ? 1 : 0;
+            const bSelected = selectedIds.has(b.collection_id) ? 1 : 0;
+            return bSelected - aSelected;
+        });
+    }, [filteredCollections, initialSelectedCollections]);
+
+    const uniqueCollectionNames = Array.from(new Set(collections.map((c) => c.collection_name)));
     const uniqueBrands = Array.from(new Set(collections.map((c) => c.brand_name)));
     const uniqueTypes = Array.from(new Set(collections.map((c) => c.type)));
     const uniqueMaterialTypes = Array.from(new Set(collections.map((c) => c.material_type)));
@@ -360,17 +398,32 @@ export default function ProjectsPage() {
                 title="Manage Project Collections"
                 open={isCollectionModalOpen}
                 onOk={handleSaveCollections}
-                onCancel={() => setCollectionModalOpen(false)}
+                onCancel={handleCloseCollectionsModal}
                 width={1000}
             >
                 <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
                     <Input
-                        placeholder="Search by brand, type, or material..."
+                        placeholder="Search by collection name, brand, type, or material..."
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                         allowClear
                         style={{ width: '30%' }}
                     />
+                    <Select
+                        showSearch
+                        allowClear
+                        placeholder="Filter by Collection Name"
+                        value={filterCollectionName || undefined}
+                        onChange={(v) => setFilterCollectionName(v || null)}
+                        style={{ width: '20%' }}
+                        optionFilterProp="children"
+                    >
+                        {uniqueCollectionNames.map((name) => (
+                            <Option key={name} value={name}>
+                                {name}
+                            </Option>
+                        ))}
+                    </Select>
                     <Select
                         allowClear
                         placeholder="Filter by Brand"
@@ -414,13 +467,17 @@ export default function ProjectsPage() {
 
                 <Table
                     rowKey="collection_id"
-                    dataSource={filteredCollections}
+                    dataSource={sortedCollections}
                     columns={collectionColumns}
                     rowSelection={{
                         selectedRowKeys: selectedCollections,
                         onChange: (keys) => setSelectedCollections(keys as number[]),
                     }}
-                    pagination={{ pageSize: 8 }}
+                    pagination={{
+                        pageSize: 8,
+                        current: collectionTablePage,
+                        onChange: (page) => setCollectionTablePage(page),
+                    }}
                 />
             </Modal>
 
