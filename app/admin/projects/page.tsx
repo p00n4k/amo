@@ -76,7 +76,6 @@ export default function ProjectsPage() {
 
     // ✅ Filters
     const [searchText, setSearchText] = useState('');
-    const [filterCollectionName, setFilterCollectionName] = useState<string | null>(null);
     const [filterBrand, setFilterBrand] = useState<string | null>(null);
     const [filterType, setFilterType] = useState<string | null>(null);
     const [filterMaterialType, setFilterMaterialType] = useState<string | null>(null);
@@ -165,7 +164,7 @@ export default function ProjectsPage() {
 
     useEffect(() => {
         setCollectionTablePage(1);
-    }, [searchText, filterCollectionName, filterBrand, filterType, filterMaterialType]);
+    }, [searchText, filterBrand, filterType, filterMaterialType]);
 
     // ✅ Image modal functions
     const openImageModal = async (project_id: number) => {
@@ -302,21 +301,12 @@ export default function ProjectsPage() {
             c.material_type.toLowerCase().includes(searchText.toLowerCase());
 
         const matchesBrand = filterBrand ? c.brand_name === filterBrand : true;
-        const matchesCollectionName = filterCollectionName
-            ? c.collection_name === filterCollectionName
-            : true;
         const matchesType = filterType ? c.type === filterType : true;
         const matchesMaterialType = filterMaterialType
             ? c.material_type === filterMaterialType
             : true;
 
-        return (
-            matchesSearch &&
-            matchesCollectionName &&
-            matchesBrand &&
-            matchesType &&
-            matchesMaterialType
-        );
+        return matchesSearch && matchesBrand && matchesType && matchesMaterialType;
     });
 
     const sortedCollections = useMemo(() => {
@@ -328,7 +318,6 @@ export default function ProjectsPage() {
         });
     }, [filteredCollections, initialSelectedCollections]);
 
-    const uniqueCollectionNames = Array.from(new Set(collections.map((c) => c.collection_name)));
     const uniqueBrands = Array.from(new Set(collections.map((c) => c.brand_name)));
     const uniqueTypes = Array.from(new Set(collections.map((c) => c.type)));
     const uniqueMaterialTypes = Array.from(new Set(collections.map((c) => c.material_type)));
@@ -409,21 +398,6 @@ export default function ProjectsPage() {
                         allowClear
                         style={{ width: '30%' }}
                     />
-                    <Select
-                        showSearch
-                        allowClear
-                        placeholder="Filter by Collection Name"
-                        value={filterCollectionName || undefined}
-                        onChange={(v) => setFilterCollectionName(v || null)}
-                        style={{ width: '20%' }}
-                        optionFilterProp="children"
-                    >
-                        {uniqueCollectionNames.map((name) => (
-                            <Option key={name} value={name}>
-                                {name}
-                            </Option>
-                        ))}
-                    </Select>
                     <Select
                         allowClear
                         placeholder="Filter by Brand"
