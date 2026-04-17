@@ -31,7 +31,7 @@ import styles from './page.module.css';
 const { Title } = Typography;
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const formatTypeLabel = (type: string) => {
-  if (type === 'Furniture') return 'Funishing';
+  if (type === 'Furniture') return 'Furnishing';
   if (type === 'Other') return 'Others';
   return type;
 };
