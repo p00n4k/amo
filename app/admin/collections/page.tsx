@@ -30,6 +30,11 @@ import styles from './page.module.css';
 
 const { Title } = Typography;
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const formatTypeLabel = (type: string) => {
+  if (type === 'Furniture') return 'Funishing';
+  if (type === 'Other') return 'Others';
+  return type;
+};
 
 interface Collection {
   collection_id: number;
@@ -305,10 +310,11 @@ export default function CollectionsPage() {
       key: 'type',
       filters: [
         { text: 'Surface', value: 'Surface' },
-        { text: 'Furniture', value: 'Furniture' },
-        { text: 'Other', value: 'Other' },
+        { text: formatTypeLabel('Furniture'), value: 'Furniture' },
+        { text: formatTypeLabel('Other'), value: 'Other' },
       ],
       onFilter: (value, record) => record.type === value,
+      render: (value: Collection['type']) => formatTypeLabel(value),
     },
     {
       title: 'Status',
@@ -435,8 +441,8 @@ export default function CollectionsPage() {
             optionFilterProp="label"
             options={[
               { label: 'Surface', value: 'Surface' },
-              { label: 'Furniture', value: 'Furniture' },
-              { label: 'Other', value: 'Other' },
+              { label: formatTypeLabel('Furniture'), value: 'Furniture' },
+              { label: formatTypeLabel('Other'), value: 'Other' },
             ]}
             onChange={(value) =>
               setSearchFilters((prev) => ({ ...prev, type: (value || '') as SearchFilters['type'] }))
@@ -509,8 +515,8 @@ export default function CollectionsPage() {
           <Form.Item label="Type" name="type" rules={[{ required: true }]}>
             <Select>
               <Select.Option value="Surface">Surface</Select.Option>
-              <Select.Option value="Furniture">Furniture</Select.Option>
-              <Select.Option value="Other">Other</Select.Option>
+              <Select.Option value="Furniture">{formatTypeLabel('Furniture')}</Select.Option>
+              <Select.Option value="Other">{formatTypeLabel('Other')}</Select.Option>
             </Select>
           </Form.Item>
 

@@ -15,6 +15,13 @@ interface Brand {
 
 type MainType = "Surface" | "Furnishing" | "Other";
 
+const formatTypeLabel = (type: string) => {
+    const normalized = (type || "").toLowerCase();
+    if (normalized === "furniture" || normalized === "furnishing") return "Furnishing";
+    if (normalized === "other") return "Others";
+    return type;
+};
+
 export default function BrandsSearchPage() {
     const [activeMainType, setActiveMainType] = useState<MainType>("Surface");
     const [activeType, setActiveType] = useState<string>("ALL");
@@ -91,7 +98,7 @@ export default function BrandsSearchPage() {
     // Search filter
     const filteredBrands = brands.filter((brand) => {
         const name = brand.brand_name?.toLowerCase() ?? "";
-        const type = brand.type?.toLowerCase() ?? "";
+        const type = formatTypeLabel(brand.type || "").toLowerCase();
         const term = searchTerm.toLowerCase();
 
         return name.includes(term) || type.includes(term);
@@ -125,7 +132,7 @@ export default function BrandsSearchPage() {
                             : "border-transparent text-gray-400 hover:text-white"
                             }`}
                     >
-                        {type}
+                        {formatTypeLabel(type)}
                     </button>
                 ))}
             </div>
@@ -150,7 +157,7 @@ export default function BrandsSearchPage() {
                             : "bg-white text-black hover:bg-gray-200"
                             }`}
                     >
-                        {type.toUpperCase()}
+                        {formatTypeLabel(type).toUpperCase()}
                     </button>
                 ))}
             </div>
@@ -161,7 +168,7 @@ export default function BrandsSearchPage() {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search brands or types..."
+                    placeholder="Search brands or types (Furnishing, Others)..."
                     className="w-full max-w-md mx-auto block bg-[#2E2E2E] border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400"
                 />
             </div>

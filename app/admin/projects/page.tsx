@@ -29,6 +29,11 @@ const { Title } = Typography;
 const { Option } = Select;
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const formatTypeLabel = (type: string) => {
+    if (type === 'Furniture') return 'Funishing';
+    if (type === 'Other') return 'Others';
+    return type;
+};
 
 interface Project {
     project_id: number;
@@ -271,7 +276,11 @@ export default function ProjectsPage() {
         { title: 'ID', dataIndex: 'collection_id', width: 70 },
         { title: 'Collection Name', dataIndex: 'collection_name' },
         { title: 'Brand', dataIndex: 'brand_name' },
-        { title: 'Type', dataIndex: 'type' },
+        {
+            title: 'Type',
+            dataIndex: 'type',
+            render: (type: string) => formatTypeLabel(type),
+        },
         { title: 'Item', dataIndex: 'material_type' },
         {
             title: 'Status',
@@ -294,9 +303,11 @@ export default function ProjectsPage() {
 
     // ✅ Filter logic
     const filteredCollections = collections.filter((c) => {
+        const displayType = formatTypeLabel(c.type).toLowerCase();
         const matchesSearch =
             c.collection_name.toLowerCase().includes(searchText.toLowerCase()) ||
             c.type.toLowerCase().includes(searchText.toLowerCase()) ||
+            displayType.includes(searchText.toLowerCase()) ||
             c.brand_name.toLowerCase().includes(searchText.toLowerCase()) ||
             c.material_type.toLowerCase().includes(searchText.toLowerCase());
 
@@ -420,7 +431,7 @@ export default function ProjectsPage() {
                     >
                         {uniqueTypes.map((t) => (
                             <Option key={t} value={t}>
-                                {t}
+                                {formatTypeLabel(t)}
                             </Option>
                         ))}
                     </Select>
