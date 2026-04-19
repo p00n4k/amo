@@ -17,7 +17,13 @@ export async function GET() {
       ORDER BY pm.id DESC
     `);
     await connection.end();
-    return NextResponse.json(rows);
+
+    const parsed = (rows as any[]).map((row: any) => ({
+      ...row,
+      images: typeof row.images === 'string' ? JSON.parse(row.images) : row.images,
+    }));
+
+    return NextResponse.json(parsed);
   } catch (error: any) {
     console.error("GET /productmain error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
