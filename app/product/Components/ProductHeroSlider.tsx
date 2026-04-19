@@ -18,7 +18,6 @@ export default function ProductPage() {
                 const item = Array.isArray(data) ? data[0] : data;
 
                 if (item) {
-                    item.images = item.images?.map((img: any) => img.image_url) || [];
                     setProduct(item);
                 }
             } catch (e) {

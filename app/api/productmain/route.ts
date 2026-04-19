@@ -18,10 +18,11 @@ export async function GET() {
     `);
     await connection.end();
 
-    const parsed = (rows as any[]).map((row: any) => ({
-      ...row,
-      images: typeof row.images === 'string' ? JSON.parse(row.images) : row.images,
-    }));
+    const parsed = (rows as any[]).map((row: any) => {
+      let images = typeof row.images === 'string' ? JSON.parse(row.images) : row.images;
+      images = Array.isArray(images) ? images.filter((img: any) => img != null && img !== '') : [];
+      return { ...row, images };
+    });
 
     return NextResponse.json(parsed);
   } catch (error: any) {
