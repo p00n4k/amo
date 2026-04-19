@@ -13,7 +13,7 @@ export default function ProductPage() {
     useEffect(() => {
         const loadProduct = async () => {
             try {
-                const res = await fetch("/api/admin/productmain", { cache: "no-store" });
+                const res = await fetch("/api/productmain", { cache: "no-store" });
                 const data = await res.json();
                 const item = Array.isArray(data) ? data[0] : data;
 

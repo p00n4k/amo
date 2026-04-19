@@ -56,21 +56,21 @@ const Furnishing = () => {
     return (
         <div className="mb-16">
             <div className="flex items-center justify-between mb-6">
-  <h2 className="text-2xl font-semibold">Furnishing</h2>
+                <h2 className="text-2xl font-semibold">Furnishing</h2>
 
-  <Link
-    href="/brands"
-    className="
+                <Link
+                    href="/brands"
+                    className="
       bg-orange-500 text-white
       px-5 py-2 rounded-full text-lg font-bold
       hover:bg-orange-600
       transition-all duration-300
       shadow-md hover:shadow-lg
     "
-  >
-    View All Brands
-  </Link>
-</div>
+                >
+                    View All Brands
+                </Link>
+            </div>
 
 
             <div className="grid grid-cols-3 gap-6">
@@ -90,6 +90,8 @@ const Furnishing = () => {
                             <Link
                                 key={item.item_id}
                                 href={item.link || '#'}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={`relative bg-white/5 rounded-xl overflow-hidden group cursor-pointer ${SMALL_H}`}
                                 aria-label="View detail more"
                             >
@@ -113,6 +115,8 @@ const Furnishing = () => {
                     {bigCard ? (
                         <Link
                             href={bigCard.link || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="relative block w-full h-full"
                             aria-label="View detail more"
                         >
@@ -127,7 +131,7 @@ const Furnishing = () => {
                             <CardOverlay />
 
                             {/* Bottom label */}
-                            
+
                         </Link>
                     ) : (
                         <div className="bg-gray-300 animate-pulse w-full h-full rounded-3xl" />
