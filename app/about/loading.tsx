@@ -2,7 +2,7 @@ export default function AboutLoading() {
     return (
         <div className="min-h-screen animate-pulse">
             {/* Hero */}
-            <div className="bg-brand-page py-10 pt-35">
+            <div className="bg-[#E8E5E0] py-10 pt-35">
                 <div className="flex justify-between max-w-6xl mx-auto px-4 items-start">
                     <div className="h-24 w-32 bg-gray-300 rounded-b-3xl" />
                     <div className="flex flex-col items-center gap-3">
@@ -14,7 +14,7 @@ export default function AboutLoading() {
             </div>
 
             {/* Content */}
-            <div className="bg-brand-dark-alt">
+            <div className="bg-[#2D2D2D]">
                 <div className="max-w-6xl mx-auto py-16 px-6">
                     <div className="grid md:grid-cols-2 gap-8">
                         <div className="space-y-8">
@@ -41,7 +41,7 @@ export default function AboutLoading() {
                 </div>
 
                 {/* Quote */}
-                <div className="bg-brand-dark-soft py-16 px-6 flex flex-col items-center gap-4">
+                <div className="bg-[#4A4A4A] py-16 px-6 flex flex-col items-center gap-4">
                     {Array.from({ length: 4 }).map((_, i) => (
                         <div key={i} className={`h-4 bg-gray-600 rounded ${i >= 2 ? 'w-48' : 'w-3/4 max-w-xl'}`} />
                     ))}
@@ -53,7 +53,7 @@ export default function AboutLoading() {
                 </div>
 
                 {/* Map */}
-                <div className="bg-brand-dark py-10 px-6">
+                <div className="bg-[#3A3A3A] py-10 px-6">
                     <div className="max-w-4xl mx-auto">
                         <div className="w-full aspect-[16/9] bg-gray-700 rounded-lg" />
                         <div className="flex flex-col items-center gap-2 mt-8">

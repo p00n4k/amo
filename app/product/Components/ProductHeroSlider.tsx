@@ -124,7 +124,7 @@ export default function ProductPage() {
             </div>
 
             {/* ✅ Banner Section (เพิ่มปุ่ม Brands ด้านล่าง) */}
-            <div className="bg-brand-dark px-4 py-6 flex justify-center items-center">
+            <div className="bg-[#3a3a3a] px-4 py-6 flex justify-center items-center">
                 <div className="w-full max-w-7xl h-[80px] sm:h-[120px] md:h-[150px] rounded-xl overflow-hidden shadow-lg relative">
                     <Image
                         src="/static/banner.png"

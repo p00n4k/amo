@@ -180,8 +180,8 @@ export default function SignatureCollections() {
             <button
               onClick={() => setActiveType("surface")}
               className={`px-5 py-2 rounded-full border text-sm transition-all duration-300 ${activeType === "surface"
-                ? "bg-orange-400 text-white border-orange-400"
-                : "text-gray-700 border-gray-300 hover:border-orange-400"
+                ? "bg-primary text-white border-primary"
+                : "text-gray-700 border-gray-300 hover:border-primary"
                 }`}
             >
               Surface
@@ -189,8 +189,8 @@ export default function SignatureCollections() {
             <button
               onClick={() => setActiveType("furnishing")}
               className={`px-5 py-2 rounded-full border text-sm transition-all duration-300 ${activeType === "furnishing"
-                ? "bg-orange-400 text-white border-orange-400"
-                : "text-gray-700 border-gray-300 hover:border-orange-400"
+                ? "bg-primary text-white border-primary"
+                : "text-gray-700 border-gray-300 hover:border-primary"
                 }`}
             >
               Furnishing
@@ -228,7 +228,7 @@ export default function SignatureCollections() {
               <Link
                 href={activeItem.link}
                 target="_blank"
-                className="inline-block text-orange-500 border border-orange-400 rounded-full px-5 py-2 text-sm hover:bg-orange-400 hover:text-white transition"
+                className="inline-block text-primary border border-primary rounded-full px-5 py-2 text-sm hover:bg-primary hover:text-white transition"
               >
                 Visit Collection ↗
               </Link>
@@ -236,13 +236,13 @@ export default function SignatureCollections() {
               <div className="flex gap-2 mt-8">
                 <button
                   onClick={() => go(-1)}
-                  className="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-orange-400 hover:text-orange-500 transition"
+                  className="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-primary hover:text-primary transition"
                 >
                   ←
                 </button>
                 <button
                   onClick={() => go(1)}
-                  className="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-orange-400 hover:text-orange-500 transition"
+                  className="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-primary hover:text-primary transition"
                 >
                   →
                 </button>

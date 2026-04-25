@@ -1,5 +1,5 @@
 .quote {
-  background-color: var(--color-brand-quote);
+  background-color: #444; /* เทาเข้มตามภาพ */
   color: #fff;
   text-align: center;
   padding: 60px 16px;
@@ -34,7 +34,7 @@
 .quote__subtitle {
   font-size: 0.95rem;
   font-weight: 300;
-  color: var(--color-brand-muted);
+  color: #ccc;
   line-height: 1.6;
 }
 

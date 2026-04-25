@@ -38,6 +38,7 @@ function ProjectDetailContent() {
     const [selectedType, setSelectedType] = useState<string | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const handleCollectionClick = (c: Collection) => {
         const linkToOpen = c.status ? c.link : c.relate_link;
         openExternalLink(linkToOpen);
@@ -77,7 +78,7 @@ function ProjectDetailContent() {
 
     if (!project) {
         return (
-            <div className="bg-brand-dark-soft min-h-screen text-white animate-pulse overflow-x-hidden">
+            <div className="bg-[#4a4a4a] min-h-screen text-white animate-pulse overflow-x-hidden">
                 <header className="flex items-center px-8 py-4">
                     <div className="h-10 w-40 bg-gray-600 rounded-full" />
                 </header>
@@ -101,7 +102,7 @@ function ProjectDetailContent() {
                         ))}
                     </div>
                 </div>
-                <div className="bg-brand-dark rounded-2xl p-6 mx-8 mb-8">
+                <div className="bg-[#3a3a3a] rounded-2xl p-6 mx-8 mb-8">
                     <div className="flex justify-between items-center mb-6">
                         <div className="h-7 w-48 bg-gray-600 rounded" />
                         <div className="h-9 w-32 bg-gray-600 rounded-full" />
@@ -140,15 +141,98 @@ function ProjectDetailContent() {
     };
 
     return (
-        <div className="bg-brand-dark-soft min-h-screen text-white overflow-x-hidden">
+        <div className="bg-[#4a4a4a] min-h-screen text-white overflow-x-hidden">
 
-            <header className="flex items-center justify-between px-4 sm:px-8 py-4 bg-transparent">
-                <Link href="/projects">
-                    <button className="bg-white text-black font-semibold px-6 py-2 rounded-full shadow-md hover:bg-gray-100 transition">
-                        Back to Project
-                    </button>
+            {/* ─── Navbar ─── */}
+            <header className="sticky top-0 z-50 h-[75px] bg-[#444444] flex items-center px-6 gap-4">
+
+                {/* Hamburger — mobile only */}
+                <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    aria-label="Toggle menu"
+                    className="md:hidden flex flex-col justify-center items-center w-[45px] h-[45px] gap-[6px] flex-shrink-0"
+                >
+                    <span className="block w-[22px] h-[3px] bg-[#F8F2E6] rounded" />
+                    <span className="block w-[22px] h-[3px] bg-[#F8F2E6] rounded" />
+                    <span className="block w-[22px] h-[3px] bg-[#F8F2E6] rounded" />
+                </button>
+
+                {/* Amo logo — mobile only */}
+                <span className="font-amo md:hidden text-white text-[30px] leading-[28px] tracking-[-0.3px]">Amo</span>
+
+                {/* Back to Project — desktop */}
+                <Link href="/projects" className="hidden md:flex items-center px-[18px] py-[10px] rounded-[20px] bg-[#F8F2E6] text-[#444444] font-medium text-base leading-[28px] whitespace-nowrap transition hover:bg-white">
+                    Back to Project
+                </Link>
+
+                {/* Center nav links */}
+                <nav className="hidden md:flex items-center gap-8 ml-4">
+                    <Link href="/product" className="text-[#F8F2E6] font-light text-base tracking-[-0.3px] hover:text-white transition">Products</Link>
+                    <Link href="/home" className="text-[#F8F2E6] font-light text-base tracking-[-0.3px] hover:text-white transition">Home</Link>
+                </nav>
+
+                {/* Spacer */}
+                <div className="flex-1" />
+
+                {/* Amo logo — desktop */}
+                <span className="font-amo hidden md:block text-white text-[30px] leading-[28px] tracking-[-0.3px]">Amo</span>
+
+                {/* Vertical divider */}
+                <div className="hidden md:block w-px h-12 bg-[#F8F2E6]/50" />
+
+                {/* LINE icon */}
+                <a
+                    href="https://line.me/ti/p/~amocorner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden md:flex flex-shrink-0"
+                >
+                    <img src="/static/line.png" alt="LINE" className="w-8 h-8" />
+                </a>
+
+                {/* Get in touch */}
+                <Link
+                    href="/about"
+                    className="hidden md:flex items-center px-[18px] py-[10px] rounded-[20px] bg-primary text-white font-medium text-base leading-[28px] whitespace-nowrap transition hover:bg-primary-hover"
+                >
+                    Get in touch
                 </Link>
             </header>
+
+            {/* Mobile slide-out menu */}
+            <div className={`fixed inset-0 z-40 bg-[#444444] flex flex-col items-center justify-center gap-8 transition-transform duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+                }`}>
+                <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="absolute top-6 right-6 text-[#F8F2E6] text-3xl leading-none"
+                    aria-label="Close menu"
+                >✕</button>
+
+                <Link href="/projects" onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center px-[18px] py-[10px] rounded-[20px] bg-[#F8F2E6] text-[#444444] font-medium text-xl"
+                >
+                    Back to Project
+                </Link>
+                <Link href="/product" onClick={() => setIsMenuOpen(false)} className="text-[#F8F2E6] font-light text-2xl tracking-[-0.3px] hover:text-white transition">Products</Link>
+                <Link href="/home" onClick={() => setIsMenuOpen(false)} className="text-[#F8F2E6] font-light text-2xl tracking-[-0.3px] hover:text-white transition">Home</Link>
+                <a
+                    href="https://line.me/ti/p/~amocorner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3"
+                >
+                    <img src="/static/line.png" alt="LINE" className="w-8 h-8" />
+                    <span className="text-[#F8F2E6] text-lg">amocorner</span>
+                </a>
+                <Link
+                    href="/about"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center px-[18px] py-[10px] rounded-[20px] bg-primary text-white font-medium text-xl hover:bg-primary-hover transition"
+                >
+                    Get in touch
+                </Link>
+            </div>
 
             <section className="px-4 sm:px-8 md:px-12 pt-10 sm:pt-14 md:pt-16 pb-6 sm:pb-10">
                 <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold mb-2">About Project</h1>
@@ -209,33 +293,33 @@ function ProjectDetailContent() {
                 {totalCarouselPages > 1 && (
                     <div className="flex justify-center gap-2">
                         {Array.from({ length: totalCarouselPages }).map((_, i) => (
-                            <button key={i} onClick={() => setCarouselIndex(i)} className={`w-3 h-3 rounded-full border-2 border-orange-500 ${i === carouselIndex ? 'bg-orange-500' : ''}`} />
+                            <button key={i} onClick={() => setCarouselIndex(i)} className={`w-3 h-3 rounded-full border-2 border-primary ${i === carouselIndex ? 'bg-primary' : ''}`} />
                         ))}
                     </div>
                 )}
             </div>
 
             {/* TABLE */}
-            <div className="bg-brand-dark rounded-2xl p-4 sm:p-6 mx-2 sm:mx-4 md:mx-8 mb-8">
+            <div className="bg-[#3a3a3a] rounded-2xl p-4 sm:p-6 mx-2 sm:mx-4 md:mx-8 mb-8">
 
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="flex items-center gap-2 text-xl font-semibold">
-                        <LibraryBig className="text-orange-500 w-6 h-6" />
+                        <LibraryBig className="text-primary w-6 h-6" />
                         Product Overview
                     </h2>
 
                     <div className="relative">
-                        <button onClick={() => setDropdownOpen(!dropdownOpen)} className="px-4 py-2 border border-orange-500 text-orange-500 rounded-full hover:bg-orange-500 hover:text-white transition">
+                        <button onClick={() => setDropdownOpen(!dropdownOpen)} className="px-4 py-2 border border-primary text-primary rounded-full hover:bg-primary hover:text-white transition">
                             {selectedType || "Select Type"}
                         </button>
 
                         {dropdownOpen && (
                             <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-10">
-                                <button className="block w-full px-4 py-2 hover:bg-orange-100" onClick={() => { setSelectedType(null); setDropdownOpen(false); }}>
+                                <button className="block w-full px-4 py-2 hover:bg-secondary/20" onClick={() => { setSelectedType(null); setDropdownOpen(false); }}>
                                     All Type
                                 </button>
                                 {uniqueTypes.map(t => (
-                                    <button key={t} className="block w-full px-4 py-2 hover:bg-orange-100" onClick={() => { setSelectedType(t); setDropdownOpen(false); }}>
+                                    <button key={t} className="block w-full px-4 py-2 hover:bg-secondary/20" onClick={() => { setSelectedType(t); setDropdownOpen(false); }}>
                                         {t}
                                     </button>
                                 ))}
@@ -245,35 +329,35 @@ function ProjectDetailContent() {
                 </div>
 
                 <div className="overflow-x-auto">
-                <table className="w-full text-xs sm:text-sm text-left min-w-[600px]">
-                    <thead>
-                        <tr className="border-b border-gray-600">
-                            <th className="px-4 py-2">Collection Name</th>
-                            <th className="px-4 py-2">Item</th>
-                            <th className="px-4 py-2">Brand</th>
-                            <th className="px-4 py-2">Type</th>
-                            <th className="px-4 py-2">Status</th>
-                            <th className="px-4 py-2 w-1/3">Description</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {filteredCollections.map(c => (
-                            <tr
-                                key={c.collection_id}
-                                onClick={() => handleCollectionClick(c)}
-                                className="border-b border-gray-700 hover:bg-gray-700 cursor-pointer transition"
-                            >
-                                <td className="px-4 py-2">{c.collection_name}</td>
-                                <td className="px-4 py-2">{c.material_type}</td>
-                                <td className="px-4 py-2">{c.brand_name}</td>
-                                <td className="px-4 py-2">{c.type}</td>
-                                <td className="px-4 py-2">{c.status ? "Available" : "Discontinued"}</td>
-                                <td className="px-4 py-2 text-gray-300">{c.description}</td>
+                    <table className="w-full text-xs sm:text-sm text-left min-w-[600px]">
+                        <thead>
+                            <tr className="border-b border-gray-600">
+                                <th className="px-4 py-2">Collection Name</th>
+                                <th className="px-4 py-2">Item</th>
+                                <th className="px-4 py-2">Brand</th>
+                                <th className="px-4 py-2">Type</th>
+                                <th className="px-4 py-2">Status</th>
+                                <th className="px-4 py-2 w-1/3">Description</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody>
+                            {filteredCollections.map(c => (
+                                <tr
+                                    key={c.collection_id}
+                                    onClick={() => handleCollectionClick(c)}
+                                    className="border-b border-gray-700 hover:bg-gray-700 cursor-pointer transition"
+                                >
+                                    <td className="px-4 py-2">{c.collection_name}</td>
+                                    <td className="px-4 py-2">{c.material_type}</td>
+                                    <td className="px-4 py-2">{c.brand_name}</td>
+                                    <td className="px-4 py-2">{c.type}</td>
+                                    <td className="px-4 py-2">{c.status ? "Available" : "Discontinued"}</td>
+                                    <td className="px-4 py-2 text-gray-300">{c.description}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -284,7 +368,7 @@ function ProjectDetailContent() {
 export default function ProjectDetail() {
     return (
         <Suspense fallback={
-            <div className="bg-brand-dark-soft min-h-screen text-white flex items-center justify-center">
+            <div className="bg-[#4a4a4a] min-h-screen text-white flex items-center justify-center">
                 <p className="text-xl">Loading project...</p>
             </div>
         }>

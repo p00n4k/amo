@@ -98,7 +98,7 @@ const ProjectPage = () => {
     };
 
     return (
-        <div className="bg-brand-dark-alt min-h-screen text-white px-4 py-8 pt-35">
+        <div className="bg-[#2d2d2d] min-h-screen text-white px-4 py-8 pt-35">
             <p className="text-sm mb-4">
                 We have a diverse body of work and utilize various materials.
             </p>

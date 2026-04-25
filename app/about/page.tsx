@@ -2,13 +2,13 @@ import Image from "next/image";
 
 export default function AboutPage() {
     return (
-        <div className="bg-brand-page text-white min-h-screen pt-35">
+        <div className="bg-[#E8E5E0] text-white min-h-screen pt-35">
             {/* ===== HERO SECTION ===== */}
-            <div className="bg-brand-page text-center py-8 sm:py-10 mt-0">
+            <div className="bg-[#E8E5E0] text-center py-8 sm:py-10 mt-0">
                 <div className="flex justify-between max-w-6xl mx-auto items-start px-3 sm:px-4">
                     {/* Left badge */}
-                    <div className="border-brand-accent bg-white border-t-[6px] shadow-md p-3 sm:p-4 rounded-b-3xl w-24 sm:w-32">
-                        <div className="text-brand-accent text-lg sm:text-2xl font-bold">30+ Years</div>
+                    <div className="bg-white border-t-[6px] border-primary shadow-md p-3 sm:p-4 rounded-b-3xl w-24 sm:w-32">
+                        <div className="text-primary text-lg sm:text-2xl font-bold">30+ Years</div>
                         <p className="text-gray-500 text-xs sm:text-sm">of experience</p>
                     </div>
 
@@ -21,15 +21,15 @@ export default function AboutPage() {
                     </div>
 
                     {/* Right badge */}
-                    <div className="border-brand-accent bg-white border-t-[6px] shadow-md p-3 sm:p-4 rounded-b-3xl w-24 sm:w-32">
-                        <div className="text-brand-accent text-lg sm:text-2xl font-bold">1000+</div>
+                    <div className="bg-white border-t-[6px] border-primary shadow-md p-3 sm:p-4 rounded-b-3xl w-24 sm:w-32">
+                        <div className="text-primary text-lg sm:text-2xl font-bold">1000+</div>
                         <p className="text-gray-500 text-xs sm:text-sm">Projects</p>
                     </div>
                 </div>
             </div>
 
             {/* ===== CONTENT SECTION ===== */}
-            <div className="bg-brand-dark-alt">
+            <div className="bg-[#2D2D2D]">
                 <div className="max-w-6xl mx-auto py-8 sm:py-16 px-4 sm:px-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                         {/* Left side */}
@@ -69,7 +69,7 @@ export default function AboutPage() {
                         <div className="space-y-10">
                             <div className="text-right">
                                 <p className="text-gray-400 text-lg mb-2">Established in</p>
-                                <h2 className="text-brand-accent text-[56px] sm:text-[80px] md:text-[120px] font-extrabold leading-none">
+                                <h2 className="text-primary text-[56px] sm:text-[80px] md:text-[120px] font-extrabold leading-none">
                                     2010
                                 </h2>
                                 <p className="text-gray-200 text-justify mt-4">
@@ -92,7 +92,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* ===== QUOTE SECTION ===== */}
-                <div className="bg-brand-dark-soft text-center py-16 px-6">
+                <div className="bg-[#4A4A4A] text-center py-16 px-6">
                     <p className="text-gray-300 max-w-3xl mx-auto leading-relaxed">
                         Since the establishment, Amo has catered in completing several
                         wonderful home renovation and decoration works. With a focus on
@@ -127,7 +127,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* ===== MAP SECTION ===== */}
-                <div className="bg-brand-dark py-10 px-6">
+                <div className="bg-[#3A3A3A] py-10 px-6">
                     <div className="max-w-4xl mx-auto">
                         <div className="relative w-full aspect-[16/9]">
                             <Image

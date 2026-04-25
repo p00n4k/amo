@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import BrandCard from "./BrandCard"; // Adjust this path based on where BrandCard is saved
 
 // Types
@@ -29,6 +30,7 @@ export default function BrandsSearchPage() {
     const [types, setTypes] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // Load when main type or type changes
     useEffect(() => {
@@ -105,18 +107,102 @@ export default function BrandsSearchPage() {
     });
 
     return (
-        <div className="bg-brand-dark text-white min-h-screen">
+        <div className="bg-[#3A3A3A] text-white min-h-screen">
 
-            {/* Header */}
-            <header className="bg-brand-dark-header flex items-center justify-between px-6 py-4">
+            {/* ─── Navbar ─── */}
+            <header className="sticky top-0 z-50 h-[75px] bg-[#444444] flex items-center px-6 gap-4">
+
+                {/* Hamburger — mobile only */}
+                <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    aria-label="Toggle menu"
+                    className="md:hidden flex flex-col justify-center items-center w-[45px] h-[45px] gap-[6px] flex-shrink-0"
+                >
+                    <span className="block w-[22px] h-[3px] bg-[#F8F2E6] rounded" />
+                    <span className="block w-[22px] h-[3px] bg-[#F8F2E6] rounded" />
+                    <span className="block w-[22px] h-[3px] bg-[#F8F2E6] rounded" />
+                </button>
+
+                {/* Amo logo — mobile only, next to burger */}
+                <span className="font-amo md:hidden text-white text-[30px] leading-[28px] tracking-[-0.3px]">Amo</span>
+
+                {/* Back to Products */}
                 <button
                     onClick={() => window.history.back()}
-                    className="bg-brand-light text-black px-4 py-2 rounded-md text-sm hover:bg-gray-200 transition"
+                    className="hidden md:flex items-center px-[18px] py-[10px] rounded-[20px] bg-[#F8F2E6] text-[#444444] font-medium text-base leading-[28px] whitespace-nowrap transition hover:bg-white"
                 >
-                    ← Back
+                    Back to Products
                 </button>
-                <h1 className="font-bold text-lg">Brands</h1>
+
+                {/* Center nav links */}
+                <nav className="hidden md:flex items-center gap-8 ml-4">
+                    <Link href="/projects" className="text-[#F8F2E6] font-light text-base tracking-[-0.3px] hover:text-white transition">Projects</Link>
+                    <Link href="/home" className="text-[#F8F2E6] font-light text-base tracking-[-0.3px] hover:text-white transition">Home</Link>
+                </nav>
+
+                {/* Spacer */}
+                <div className="flex-1" />
+
+                {/* Amo logo — desktop only */}
+                <span className="font-amo hidden md:block text-white text-[30px] leading-[28px] tracking-[-0.3px]">Amo</span>
+
+                {/* Vertical divider */}
+                <div className="hidden md:block w-px h-12 bg-[#F8F2E6]/50" />
+
+                {/* LINE icon */}
+                <a
+                    href="https://line.me/ti/p/~amocorner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden md:flex flex-shrink-0"
+                >
+                    <img src="/static/line.png" alt="LINE" className="w-8 h-8" />
+                </a>
+
+                {/* Get in touch */}
+                <Link
+                    href="/about"
+                    className="hidden md:flex items-center px-[18px] py-[10px] rounded-[20px] bg-primary text-white font-medium text-base leading-[28px] whitespace-nowrap transition hover:bg-primary-hover"
+                >
+                    Get in touch
+                </Link>
             </header>
+
+            {/* Mobile slide-out menu */}
+            <div className={`fixed inset-0 z-40 bg-[#444444] flex flex-col items-center justify-center gap-8 transition-transform duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+                }`}>
+                <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="absolute top-6 right-6 text-[#F8F2E6] text-3xl leading-none"
+                    aria-label="Close menu"
+                >✕</button>
+
+                <button
+                    onClick={() => { window.history.back(); setIsMenuOpen(false); }}
+                    className="flex items-center px-[18px] py-[10px] rounded-[20px] bg-[#F8F2E6] text-[#444444] font-medium text-xl"
+                >
+                    Back to Products
+                </button>
+                <Link href="/projects" onClick={() => setIsMenuOpen(false)} className="text-[#F8F2E6] font-light text-2xl tracking-[-0.3px] hover:text-white transition">Projects</Link>
+                <Link href="/home" onClick={() => setIsMenuOpen(false)} className="text-[#F8F2E6] font-light text-2xl tracking-[-0.3px] hover:text-white transition">Home</Link>
+                <a
+                    href="https://line.me/ti/p/~amocorner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3"
+                >
+                    <img src="/static/line.png" alt="LINE" className="w-8 h-8" />
+                    <span className="text-[#F8F2E6] text-lg">amocorner</span>
+                </a>
+                <Link
+                    href="/about"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center px-[18px] py-[10px] rounded-[20px] bg-primary text-white font-medium text-xl hover:bg-primary-hover transition"
+                >
+                    Get in touch
+                </Link>
+            </div>
 
             {/* Main Type Tabs */}
             <div className="flex justify-center space-x-4 sm:space-x-8 border-b border-gray-600 px-4 sm:px-6 mt-4">
@@ -142,8 +228,8 @@ export default function BrandsSearchPage() {
                 <button
                     onClick={() => setActiveType("ALL")}
                     className={`px-4 py-2 rounded-md ${activeType === "ALL"
-                        ? "bg-brand-primary text-white"
-                        : "bg-white text-black hover:bg-gray-200"
+                        ? "bg-primary text-white"
+                        : "bg-secondary/20 text-white hover:bg-secondary/40"
                         }`}
                 >
                     ALL
@@ -153,8 +239,8 @@ export default function BrandsSearchPage() {
                         key={type}
                         onClick={() => setActiveType(type)}
                         className={`px-4 py-2 rounded-md ${activeType === type
-                            ? "bg-brand-primary text-white"
-                            : "bg-white text-black hover:bg-gray-200"
+                            ? "bg-primary text-white"
+                            : "bg-secondary/20 text-white hover:bg-secondary/40"
                             }`}
                     >
                         {formatTypeLabel(type).toUpperCase()}
@@ -169,7 +255,7 @@ export default function BrandsSearchPage() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search brands or types (Furnishing, Others)..."
-                    className="bg-brand-dark-header w-full max-w-md mx-auto block border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400"
+                    className="w-full max-w-md mx-auto block bg-[#2E2E2E] border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400"
                 />
             </div>
 

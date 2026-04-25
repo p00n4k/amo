@@ -17,7 +17,7 @@ const Footer = () => {
             className="p-3 cursor-pointer"
           >
             <Image
-              src="/static/pin-bottom.png"
+              src="/static/pin_recolor.png"
               alt="Location"
               width={32}
               height={32}
@@ -38,7 +38,7 @@ const Footer = () => {
         <div className="flex items-center gap-4">
           <div className="p-3">
             <Image
-              src="/static/call-bottom.png"
+              src="/static/call_recolor.png"
               alt="Phone"
               width={32}
               height={32}
@@ -54,7 +54,7 @@ const Footer = () => {
         <div className="flex items-center gap-4">
           <div className="p-3">
             <Image
-              src="/static/email-bottom.png"
+              src="/static/email_recolor.png"
               alt="Email"
               width={32}
               height={32}
@@ -69,7 +69,7 @@ const Footer = () => {
       {/* Social Icons */}
       <div className="mb-6 flex flex-col items-center gap-4 text-2xl md:flex-row md:justify-center md:gap-6">
         <Image
-          src="/static/followusformore-bottom.png"
+          src="/static/followusformore_recolor.png"
           alt="Follow us"
           width={260}
           height={28}
@@ -82,7 +82,7 @@ const Footer = () => {
             className="cursor-pointer"
           >
             <Image
-              src="/static/line-bottom.png"
+              src="/static/line_recolor.png"
               alt="LINE"
               width={28}
               height={28}
@@ -98,7 +98,7 @@ const Footer = () => {
             className="cursor-pointer"
           >
             <Image
-              src="/static/facebook-bottom.png"
+              src="/static/facebook_recolor.png"
               alt="Facebook"
               width={28}
               height={28}
@@ -114,7 +114,7 @@ const Footer = () => {
             className="cursor-pointer"
           >
             <Image
-              src="/static/instagram-bottom.png"
+              src="/static/instagram_recolor.png"
               alt="Instagram"
               width={28}
               height={28}
@@ -124,7 +124,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <hr className="border-t border-orange-300 w-11/12 mx-auto mb-6" />
+      <hr className="border-t border-primary/40 w-11/12 mx-auto mb-6" />
 
       <p className="text-sm text-gray-500">
         © 2016 Amo Co., Ltd. All rights reserved.

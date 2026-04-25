@@ -56,6 +56,15 @@
   width: 100%;
 }
 
+/* Active page indicator — desktop only */
+.navbar-left .nav-link.active {
+  @apply text-black font-bold;
+}
+
+.navbar-left .nav-link.active::after {
+  width: 100%;
+}
+
 /* Logo */
 .navbar-logo {
   @apply absolute left-1/2 transform -translate-x-1/2;
@@ -104,11 +113,12 @@
 
 /* CTA Button */
 .cta-button {
-  @apply text-gray-600 bg-amber-400 px-3 py-2 text-base font-medium rounded-full transition-all;
+  @apply text-white px-3 py-2 text-base font-medium rounded-full transition-all;
+  background-color: var(--color-primary);
 }
 
 .cta-button:hover {
-  @apply text-black;
+  background-color: var(--color-primary-hover);
 }
 
 /* Hamburger Menu Button */

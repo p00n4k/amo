@@ -1,6 +1,6 @@
 export default function ProjectDetailLoading() {
     return (
-        <div className="bg-brand-dark-soft min-h-screen text-white animate-pulse overflow-x-hidden">
+        <div className="bg-[#4a4a4a] min-h-screen text-white animate-pulse overflow-x-hidden">
             {/* Header */}
             <header className="flex items-center px-8 py-4">
                 <div className="h-10 w-40 bg-gray-600 rounded-full" />
@@ -33,7 +33,7 @@ export default function ProjectDetailLoading() {
             </div>
 
             {/* Product Table */}
-            <div className="bg-brand-dark rounded-2xl p-6 mx-8 mb-8">
+            <div className="bg-[#3a3a3a] rounded-2xl p-6 mx-8 mb-8">
                 <div className="flex justify-between items-center mb-6">
                     <div className="h-7 w-48 bg-gray-600 rounded" />
                     <div className="h-9 w-32 bg-gray-600 rounded-full" />

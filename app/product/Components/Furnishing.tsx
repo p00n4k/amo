@@ -61,9 +61,9 @@ const Furnishing = () => {
                 <Link
                     href="/brands"
                     className="
-      bg-orange-500 text-white
+      bg-primary text-white
       px-5 py-2 rounded-full text-lg font-bold
-      hover:bg-orange-600
+      hover:bg-primary-hover
       transition-all duration-300
       shadow-md hover:shadow-lg
     "

@@ -1,6 +1,6 @@
 export default function ProjectsLoading() {
     return (
-        <div className="bg-brand-dark-alt min-h-screen text-white px-4 py-8 pt-35 animate-pulse">
+        <div className="bg-[#2d2d2d] min-h-screen text-white px-4 py-8 pt-35 animate-pulse">
             <div className="h-4 bg-gray-600 rounded w-72 mb-4" />
 
             {/* Tabs */}

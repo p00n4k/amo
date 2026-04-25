@@ -1,8 +1,8 @@
 export default function BrandsLoading() {
     return (
-        <div className="bg-brand-dark text-white min-h-screen animate-pulse">
+        <div className="bg-[#3A3A3A] text-white min-h-screen animate-pulse">
             {/* Header */}
-            <header className="bg-brand-dark-header flex items-center justify-between px-6 py-4">
+            <header className="flex items-center justify-between px-6 py-4 bg-[#2E2E2E]">
                 <div className="h-9 w-24 bg-gray-600 rounded-md" />
                 <div className="h-6 w-20 bg-gray-600 rounded" />
             </header>

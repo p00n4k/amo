@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import "./Navbar.css";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const pathname = usePathname();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -22,9 +24,9 @@ const Navbar = () => {
                     <div className="navbar-content">
                         {/* Left navigation - Desktop only */}
                         <div className="navbar-left">
-                            <Link href="/home" className="nav-link">Home</Link>
-                            <Link href="/product" className="nav-link">Product</Link>
-                            <Link href="/projects" className="nav-link">Project</Link>
+                            <Link href="/home" className={`nav-link${pathname === "/home" ? " active" : ""}`}>Home</Link>
+                            <Link href="/product" className={`nav-link${pathname === "/product" ? " active" : ""}`}>Product</Link>
+                            <Link href="/projects" className={`nav-link${pathname === "/projects" ? " active" : ""}`}>Project</Link>
                         </div>
 
                         {/* Middle Logo */}
