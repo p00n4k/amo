@@ -77,8 +77,42 @@ function ProjectDetailContent() {
 
     if (!project) {
         return (
-            <div className="bg-[#4a4a4a] min-h-screen text-white flex items-center justify-center">
-                <p className="text-xl">Loading project...</p>
+            <div className="bg-brand-dark-soft min-h-screen text-white animate-pulse overflow-x-hidden">
+                <header className="flex items-center px-8 py-4">
+                    <div className="h-10 w-40 bg-gray-600 rounded-full" />
+                </header>
+                <section className="px-12 pt-16 pb-10 space-y-3">
+                    <div className="h-14 w-80 bg-gray-600 rounded" />
+                    <div className="h-8 w-64 bg-gray-600 rounded" />
+                    <div className="h-4 w-40 bg-gray-600 rounded" />
+                </section>
+                <div className="px-8 mb-12">
+                    <div className="flex items-center justify-center gap-4 max-w-7xl mx-auto">
+                        <div className="w-1/4 h-64 bg-gray-600 rounded-lg opacity-50" />
+                        <div className="w-2/4 h-96 bg-gray-600 rounded-2xl" />
+                        <div className="w-1/4 h-64 bg-gray-600 rounded-lg opacity-50" />
+                    </div>
+                </div>
+                <div className="text-center mb-10">
+                    <div className="h-6 w-40 bg-gray-600 rounded mx-auto mb-4" />
+                    <div className="flex justify-center gap-4">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <div key={i} className="w-32 h-20 bg-gray-600 rounded-lg" />
+                        ))}
+                    </div>
+                </div>
+                <div className="bg-brand-dark rounded-2xl p-6 mx-8 mb-8">
+                    <div className="flex justify-between items-center mb-6">
+                        <div className="h-7 w-48 bg-gray-600 rounded" />
+                        <div className="h-9 w-32 bg-gray-600 rounded-full" />
+                    </div>
+                    <div className="space-y-3">
+                        <div className="h-8 bg-gray-600 rounded w-full" />
+                        {Array.from({ length: 6 }).map((_, i) => (
+                            <div key={i} className="h-12 bg-gray-700 rounded" />
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }
@@ -106,9 +140,9 @@ function ProjectDetailContent() {
     };
 
     return (
-        <div className="bg-[#4a4a4a] min-h-screen text-white overflow-x-hidden">
+        <div className="bg-brand-dark-soft min-h-screen text-white overflow-x-hidden">
 
-            <header className="flex items-center justify-between px-8 py-4 bg-transparent">
+            <header className="flex items-center justify-between px-4 sm:px-8 py-4 bg-transparent">
                 <Link href="/projects">
                     <button className="bg-white text-black font-semibold px-6 py-2 rounded-full shadow-md hover:bg-gray-100 transition">
                         Back to Project
@@ -116,29 +150,32 @@ function ProjectDetailContent() {
                 </Link>
             </header>
 
-            <section className="px-12 pt-16 pb-10">
-                <h1 className="text-6xl font-extrabold mb-2">About Project</h1>
-                <h2 className="text-3xl font-semibold mb-2">{project.project_name}</h2>
+            <section className="px-4 sm:px-8 md:px-12 pt-10 sm:pt-14 md:pt-16 pb-6 sm:pb-10">
+                <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold mb-2">About Project</h1>
+                <h2 className="text-lg sm:text-2xl md:text-3xl font-semibold mb-2">{project.project_name}</h2>
                 <p className="text-gray-300">Updated : {formatDate(project.data_update)}</p>
             </section>
 
             {/* SLIDER */}
-            <div className="px-8 mb-12">
+            <div className="px-4 sm:px-8 mb-8 sm:mb-12">
                 <div className="relative max-w-7xl mx-auto">
-                    <div className="flex items-center justify-center gap-4">
+                    <div className="flex items-center justify-center gap-2 sm:gap-4">
 
-                        <div className="w-1/4 h-64 rounded-lg overflow-hidden opacity-50 cursor-pointer transition-all hover:opacity-70" onClick={prevSlide}>
-                            <img src={project.project_images[getPrevIndex()]} className="w-full h-full object-cover" />
+                        <div className="hidden md:block w-1/4 h-64 rounded-lg overflow-hidden opacity-50 cursor-pointer transition-all hover:opacity-70" onClick={prevSlide}>
+                            <img src={project.project_images[getPrevIndex()]} className="w-full h-full object-cover" alt="" />
                         </div>
 
-                        <div className="relative w-2/4 h-96 rounded-2xl overflow-hidden shadow-2xl group">
+                        <div className="relative w-full md:w-2/4 h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl group">
                             {project.project_images.map((img, i) => (
-                                <img key={i} src={img} className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`} />
+                                <img key={i} src={img} alt="" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`} />
                             ))}
+                            {/* Mobile prev/next controls */}
+                            <button type="button" onClick={prevSlide} className="md:hidden absolute left-2 top-1/2 -translate-y-1/2 text-white text-3xl z-20 bg-black/40 rounded-full px-2 py-0.5">‹</button>
+                            <button type="button" onClick={nextSlide} className="md:hidden absolute right-2 top-1/2 -translate-y-1/2 text-white text-3xl z-20 bg-black/40 rounded-full px-2 py-0.5">›</button>
                         </div>
 
-                        <div className="w-1/4 h-64 rounded-lg overflow-hidden opacity-50 cursor-pointer transition-all hover:opacity-70" onClick={nextSlide}>
-                            <img src={project.project_images[getNextIndex()]} className="w-full h-full object-cover" />
+                        <div className="hidden md:block w-1/4 h-64 rounded-lg overflow-hidden opacity-50 cursor-pointer transition-all hover:opacity-70" onClick={nextSlide}>
+                            <img src={project.project_images[getNextIndex()]} className="w-full h-full object-cover" alt="" />
                         </div>
 
                     </div>
@@ -146,15 +183,15 @@ function ProjectDetailContent() {
             </div>
 
             {/* CAROUSEL */}
-            <div className="text-center mb-10">
-                <h3 className="text-xl mb-4">Take a look here</h3>
+            <div className="text-center mb-8 sm:mb-10 px-4 sm:px-8">
+                <h3 className="text-base sm:text-xl mb-4">Take a look here</h3>
 
-                <div className="flex justify-center gap-4 mb-4">
+                <div className="flex justify-center flex-wrap gap-2 sm:gap-4 mb-4">
                     {carouselItems.map(c => (
                         <div
                             key={c.collection_id}
                             onClick={() => handleCollectionClick(c)}
-                            className="relative w-32 h-20 rounded-lg overflow-hidden shadow-md cursor-pointer group hover:scale-105 transition"
+                            className="relative w-24 sm:w-28 md:w-32 h-16 sm:h-20 rounded-lg overflow-hidden shadow-md cursor-pointer group hover:scale-105 transition"
                             style={{
                                 backgroundImage: `url(${c.image})`,
                                 backgroundSize: "cover",
@@ -179,7 +216,7 @@ function ProjectDetailContent() {
             </div>
 
             {/* TABLE */}
-            <div className="bg-[#3a3a3a] rounded-2xl p-6 mx-8 mb-8 overflow-hidden">
+            <div className="bg-brand-dark rounded-2xl p-4 sm:p-6 mx-2 sm:mx-4 md:mx-8 mb-8">
 
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="flex items-center gap-2 text-xl font-semibold">
@@ -207,7 +244,8 @@ function ProjectDetailContent() {
                     </div>
                 </div>
 
-                <table className="w-full text-sm text-left">
+                <div className="overflow-x-auto">
+                <table className="w-full text-xs sm:text-sm text-left min-w-[600px]">
                     <thead>
                         <tr className="border-b border-gray-600">
                             <th className="px-4 py-2">Collection Name</th>
@@ -236,6 +274,7 @@ function ProjectDetailContent() {
                         ))}
                     </tbody>
                 </table>
+                </div>
             </div>
 
         </div>
@@ -245,7 +284,7 @@ function ProjectDetailContent() {
 export default function ProjectDetail() {
     return (
         <Suspense fallback={
-            <div className="bg-[#4a4a4a] min-h-screen text-white flex items-center justify-center">
+            <div className="bg-brand-dark-soft min-h-screen text-white flex items-center justify-center">
                 <p className="text-xl">Loading project...</p>
             </div>
         }>

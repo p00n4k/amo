@@ -59,11 +59,11 @@ export default function ProductPage() {
 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white text-center px-4 z-10">
-                    <h1 className="text-6xl md:text-7xl font-bold mb-2">
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2">
                         {product?.collection_name}
                     </h1>
 
-                    <h2 className="text-3xl md:text-4xl font-light mb-8">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light mb-6 sm:mb-8">
                         {product?.brand_name}
                     </h2>
 
@@ -88,7 +88,7 @@ export default function ProductPage() {
                             href="#product-gallery"
                             className="bg-white/20 border border-white text-white px-6 py-2 rounded-full hover:bg-white/30 transition flex items-center gap-1"
                         >
-                            Discover our products <span className="text-xl">↓</span>
+                            Discover our products
                         </a>
                     </div>
                 </div>
@@ -124,8 +124,8 @@ export default function ProductPage() {
             </div>
 
             {/* ✅ Banner Section (เพิ่มปุ่ม Brands ด้านล่าง) */}
-            <div className="bg-[#3a3a3a] px-4 py-6 flex justify-center items-center">
-                <div className="w-full max-w-7xl h-[150px] rounded-xl overflow-hidden shadow-lg relative">
+            <div className="bg-brand-dark px-4 py-6 flex justify-center items-center">
+                <div className="w-full max-w-7xl h-[80px] sm:h-[120px] md:h-[150px] rounded-xl overflow-hidden shadow-lg relative">
                     <Image
                         src="/static/banner.png"
                         alt="Tile Banner"

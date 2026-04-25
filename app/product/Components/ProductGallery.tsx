@@ -9,9 +9,9 @@ const ProductGallery = () => {
     const [selectedTab, setSelectedTab] = useState<'surface' | 'furnishing'>('surface')
 
     return (
-        <div className="bg-[#3a3a3a] min-h-screen px-6 py-12 text-white">
+        <div className="bg-brand-dark min-h-screen px-4 sm:px-6 py-8 sm:py-12 text-white">
             {/* Tabs */}
-            <div className="flex justify-center space-x-10 text-lg font-light mb-8 border-b border-white/20">
+            <div className="flex justify-center space-x-6 sm:space-x-10 text-sm sm:text-lg font-light mb-8 border-b border-white/20">
                 <button
                     onClick={() => setSelectedTab('surface')}
                     className={`pb-2 ${selectedTab === 'surface' ? 'border-b-4 border-white font-semibold' : ''}`}

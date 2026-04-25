@@ -1,11 +1,5 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import { useState, useEffect, SetStateAction } from "react";
-import Image from "next/image";
-
-const Page = () => {
-
-
-};
-
-export default Page;
+export default function Page() {
+    redirect("/home");
+}

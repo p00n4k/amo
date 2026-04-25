@@ -267,7 +267,18 @@ export default function HomeSlidersPage() {
     ];
 
     if (error) return <div>Failed to load</div>;
-    if (!data) return <div>Loading...</div>;
+    if (!data) return (
+        <div className="animate-pulse space-y-3">
+            <div className="flex justify-between mb-4">
+                <div className="h-8 w-52 bg-gray-200 rounded" />
+                <div className="h-9 w-28 bg-gray-200 rounded" />
+            </div>
+            <div className="h-10 bg-gray-100 rounded" />
+            {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-20 bg-gray-100 rounded border-b border-gray-200" />
+            ))}
+        </div>
+    );
 
     return (
         <div style={{ padding: '24px' }}>

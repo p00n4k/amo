@@ -98,17 +98,17 @@ const ProjectPage = () => {
     };
 
     return (
-        <div className="bg-[#2d2d2d] min-h-screen text-white px-4 py-8 pt-35">
+        <div className="bg-brand-dark-alt min-h-screen text-white px-4 py-8 pt-35">
             <p className="text-sm mb-4">
                 We have a diverse body of work and utilize various materials.
             </p>
 
             {/* Tabs */}
-            <div className="flex space-x-12 mb-8 border-b border-gray-600">
+            <div className="flex space-x-6 sm:space-x-12 mb-8 border-b border-gray-600">
                 {tabs.map((tab) => (
                     <button
                         key={tab}
-                        className={`pb-2 text-lg font-medium transition ${activeTab === tab
+                        className={`pb-2 text-sm sm:text-lg font-medium transition ${activeTab === tab
                             ? 'border-b-4 border-white text-white'
                             : 'text-gray-400 hover:text-gray-200'
                             }`}
@@ -120,9 +120,17 @@ const ProjectPage = () => {
             </div>
 
             {loading ? (
-                <div className="flex justify-center items-center py-20">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
-                    <span className="ml-4 text-lg">Loading projects...</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-pulse">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                        <div key={i} className="bg-gray-700 rounded-lg overflow-hidden">
+                            <div className="h-60 bg-gray-600" />
+                            <div className="p-4 space-y-2">
+                                <div className="h-5 bg-gray-600 rounded w-3/4" />
+                                <div className="h-4 bg-gray-600 rounded w-1/2" />
+                                <div className="h-4 bg-gray-600 rounded w-full" />
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : projects.length === 0 ? (
                 <div className="text-center py-20 text-gray-400">

@@ -15,8 +15,8 @@ const Furnishing = () => {
     const [loading, setLoading] = useState(true);
 
     // ✅ lock heights (taller)
-    const SMALL_H = 'h-[320px] md:h-[420px] lg:h-[480px]';
-    const BIG_H = 'h-[640px] md:h-[840px] lg:h-[1000px]';
+    const SMALL_H = 'h-[160px] sm:h-[260px] md:h-[420px] lg:h-[480px]';
+    const BIG_H = 'h-[320px] sm:h-[480px] md:h-[840px] lg:h-[1000px]';
 
     useEffect(() => {
         fetchFurnishingItems();
@@ -73,9 +73,9 @@ const Furnishing = () => {
             </div>
 
 
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
                 {/* ✅ Left 2x2 Small Cards (LOCK HEIGHT + TALLER) */}
-                <div className="grid grid-cols-2 grid-rows-2 gap-6 col-span-2">
+                <div className="grid grid-cols-2 grid-rows-2 gap-3 sm:gap-6 col-span-1 md:col-span-2">
                     {loading ? (
                         Array(4)
                             .fill(0)

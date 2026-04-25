@@ -4,7 +4,14 @@ import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import { usePathname } from "next/navigation";
+import { Poppins } from "next/font/google";
 import type { ReactNode } from "react";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
@@ -20,7 +27,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <html>
-      <body className="bg-white relative">
+      <body className={`${poppins.className} bg-white relative`}>
         {/* ✅ แสดงเฉพาะหน้าที่ไม่ซ่อน */}
         {!hideNavbar && (
           <div className="absolute top-0 left-0 w-full z-50 bg-transparent">

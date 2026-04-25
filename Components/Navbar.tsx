@@ -30,7 +30,7 @@ const Navbar = () => {
                         {/* Middle Logo */}
                         <div className="navbar-logo">
                             <Link href="/">
-                                <div className="logo-text">Amo</div>
+                                <div className="logo-text font-amo">Amo</div>
                             </Link>
                         </div>
 
@@ -68,14 +68,14 @@ const Navbar = () => {
 
                 {/* Line Icon */}
                 <a
-                href="https://line.me/ti/p/~amocorner"
-                className="icon-link"
-                onClick={closeMenu}
-                target="_blank"
-                rel="noopener noreferrer"
+                    href="https://line.me/ti/p/~amocorner"
+                    className="icon-link"
+                    onClick={closeMenu}
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
-                <img src="/static/line.png" alt="Line Logo" className="icon" />
-                <span className="hidden_line">amocorner</span>
+                    <img src="/static/line.png" alt="Line Logo" className="icon" />
+                    <span className="hidden_line">amocorner</span>
                 </a>
 
 

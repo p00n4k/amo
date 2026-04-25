@@ -16,7 +16,7 @@ export default function BrandCard({
         <Link href={redirectUrl} target="_blank" rel="noopener noreferrer">
             <div
                 className="
-          h-52 rounded-xl overflow-hidden
+          h-40 sm:h-48 md:h-52 rounded-xl overflow-hidden
           bg-white shadow-md border-2 border-gray-300
           hover:border-[#ff5900] hover:shadow-[0_0_15px_rgba(255,89,0,0.7)]
           hover:scale-105 transform transition duration-300 cursor-pointer

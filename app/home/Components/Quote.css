@@ -1,9 +1,21 @@
 .quote {
-  background-color: #444; /* เทาเข้มตามภาพ */
+  background-color: var(--color-brand-quote);
   color: #fff;
   text-align: center;
-  padding: 120px 20px;
+  padding: 60px 16px;
   font-family: 'Poppins', sans-serif;
+}
+
+@media (min-width: 640px) {
+  .quote {
+    padding: 90px 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .quote {
+    padding: 120px 20px;
+  }
 }
 
 .quote__content {
@@ -13,17 +25,35 @@
 }
 
 .quote__title {
-  font-size: 2rem;
+  font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.6;
   margin-bottom: 20px;
 }
 
 .quote__subtitle {
-  font-size: 1.3rem;
+  font-size: 0.95rem;
   font-weight: 300;
-  color: #ccc;
+  color: var(--color-brand-muted);
   line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .quote__title {
+    font-size: 1.5rem;
+  }
+  .quote__subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .quote__title {
+    font-size: 2rem;
+  }
+  .quote__subtitle {
+    font-size: 1.3rem;
+  }
 }
 
 .quote__highlight {
@@ -36,6 +66,5 @@
   font-size: 4rem;
   color: #fff;
   font-weight: 700;
-  font-family: serif;
   margin-top: 40px;
 }

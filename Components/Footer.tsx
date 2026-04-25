@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="bg-white text-center py-10">
-      <h1 className=" text-black font-serif font-bold text-3xl tracking-wider;">Amo</h1>
+      <h1 className="font-amo text-black font-bold text-3xl tracking-wider;">Amo</h1>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-12 mb-10 px-6">
 
@@ -67,59 +67,61 @@ const Footer = () => {
       </div>
 
       {/* Social Icons */}
-      <div className="flex justify-center gap-6 text-2xl mb-6">
+      <div className="mb-6 flex flex-col items-center gap-4 text-2xl md:flex-row md:justify-center md:gap-6">
         <Image
           src="/static/followusformore-bottom.png"
           alt="Follow us"
           width={260}
           height={28}
         />
-        <a
-          href="https://line.me/ti/p/~amocorner"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cursor-pointer"
-        >
-        <Image
-          src="/static/line-bottom.png"
-          alt="LINE"
-          width={28}
-          height={28}
-          className="w-auto h-[28px] object-contain"
-        />
-        </a>
+        <div className="flex items-center justify-center gap-6">
+          <a
+            href="https://line.me/ti/p/~amocorner"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer"
+          >
+            <Image
+              src="/static/line-bottom.png"
+              alt="LINE"
+              width={28}
+              height={28}
+              className="h-[28px] w-auto object-contain"
+            />
+          </a>
 
-        {/* Facebook */}
-        <a
-          href="https://www.facebook.com/AmoCoLtd"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cursor-pointer"
-        >
-          <Image
-            src="/static/facebook-bottom.png"
-            alt="Facebook"
-            width={28}
-            height={28}
-            className="w-auto h-[28px] object-contain"
-          />
-        </a>
+          {/* Facebook */}
+          <a
+            href="https://www.facebook.com/AmoCoLtd"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer"
+          >
+            <Image
+              src="/static/facebook-bottom.png"
+              alt="Facebook"
+              width={28}
+              height={28}
+              className="h-[28px] w-auto object-contain"
+            />
+          </a>
 
-        {/* Instagram */}
-        <a
-          href="https://www.instagram.com/amo.co.ltd?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cursor-pointer"
-        >
-          <Image
-            src="/static/instagram-bottom.png"
-            alt="Instagram"
-            width={28}
-            height={28}
-            className="w-auto h-[28px] object-contain"
-          />
-        </a>
+          {/* Instagram */}
+          <a
+            href="https://www.instagram.com/amo.co.ltd?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer"
+          >
+            <Image
+              src="/static/instagram-bottom.png"
+              alt="Instagram"
+              width={28}
+              height={28}
+              className="h-[28px] w-auto object-contain"
+            />
+          </a>
+        </div>
       </div>
 
       <hr className="border-t border-orange-300 w-11/12 mx-auto mb-6" />

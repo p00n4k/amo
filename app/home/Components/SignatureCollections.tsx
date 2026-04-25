@@ -23,6 +23,14 @@ export default function SignatureCollections() {
   const [activeType, setActiveType] = useState<ActiveType>("surface");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const sliderRef = useRef<HTMLDivElement>(null);
   const scrollEndTimer = useRef<number | null>(null);
@@ -160,7 +168,7 @@ export default function SignatureCollections() {
   }
 
   return (
-    <section className="bg-[#f8f8f8] py-16 px-6 font-[Poppins,sans-serif]">
+    <section className="bg-[#f8f8f8] py-10 sm:py-16 px-4 sm:px-6 font-[Poppins,sans-serif]">
       <div className="max-w-[1400px] mx-auto">
         {/* ===== HEADER ===== */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12 md:mb-16">
@@ -191,7 +199,7 @@ export default function SignatureCollections() {
         </div>
 
         {/* ===== CONTENT CARD ===== */}
-        <div className="bg-white rounded-2xl p-10 md:p-12">
+        <div className="bg-white rounded-2xl p-5 sm:p-8 md:p-10 lg:p-12">
           <div className="flex flex-col md:flex-row gap-8 items-start">
             {/* --- Brand Info --- */}
             <div className="md:w-1/3">
@@ -261,8 +269,10 @@ export default function SignatureCollections() {
                       className={`relative snap-center cursor-pointer transition-all duration-700 ease-in-out ${isActive ? "z-20 opacity-100" : "opacity-70 hover:opacity-90 z-10"
                         }`}
                       style={{
-                        flex: isActive ? "0 0 60%" : "0 0 20%",
-                        height: "480px",
+                        flex: isActive
+                          ? (isMobile ? "0 0 82%" : "0 0 60%")
+                          : (isMobile ? "0 0 9%" : "0 0 20%"),
+                        height: isMobile ? "260px" : "480px",
                         borderRadius: "1.5rem",
                         transform: isActive ? "scale(1)" : "scale(0.95)",
                       }}

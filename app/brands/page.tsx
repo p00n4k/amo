@@ -105,13 +105,13 @@ export default function BrandsSearchPage() {
     });
 
     return (
-        <div className="bg-[#3A3A3A] text-white min-h-screen">
+        <div className="bg-brand-dark text-white min-h-screen">
 
             {/* Header */}
-            <header className="flex items-center justify-between px-6 py-4 bg-[#2E2E2E]">
+            <header className="bg-brand-dark-header flex items-center justify-between px-6 py-4">
                 <button
                     onClick={() => window.history.back()}
-                    className="bg-[#F5F5F5] text-black px-4 py-2 rounded-md text-sm hover:bg-gray-200 transition"
+                    className="bg-brand-light text-black px-4 py-2 rounded-md text-sm hover:bg-gray-200 transition"
                 >
                     ← Back
                 </button>
@@ -119,7 +119,7 @@ export default function BrandsSearchPage() {
             </header>
 
             {/* Main Type Tabs */}
-            <div className="flex justify-center space-x-8 border-b border-gray-600 px-6 mt-4">
+            <div className="flex justify-center space-x-4 sm:space-x-8 border-b border-gray-600 px-4 sm:px-6 mt-4">
                 {["Surface", "Furnishing", "Other"].map((type) => (
                     <button
                         key={type}
@@ -138,11 +138,11 @@ export default function BrandsSearchPage() {
             </div>
 
             {/* Type Filter */}
-            <div className="flex justify-center flex-wrap gap-3 mt-6 px-6">
+            <div className="flex justify-center flex-wrap gap-2 sm:gap-3 mt-6 px-4 sm:px-6">
                 <button
                     onClick={() => setActiveType("ALL")}
                     className={`px-4 py-2 rounded-md ${activeType === "ALL"
-                        ? "bg-[#FF7A00] text-white"
+                        ? "bg-brand-primary text-white"
                         : "bg-white text-black hover:bg-gray-200"
                         }`}
                 >
@@ -153,7 +153,7 @@ export default function BrandsSearchPage() {
                         key={type}
                         onClick={() => setActiveType(type)}
                         className={`px-4 py-2 rounded-md ${activeType === type
-                            ? "bg-[#FF7A00] text-white"
+                            ? "bg-brand-primary text-white"
                             : "bg-white text-black hover:bg-gray-200"
                             }`}
                     >
@@ -169,15 +169,17 @@ export default function BrandsSearchPage() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search brands or types (Furnishing, Others)..."
-                    className="w-full max-w-md mx-auto block bg-[#2E2E2E] border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400"
+                    className="bg-brand-dark-header w-full max-w-md mx-auto block border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400"
                 />
             </div>
 
             {/* Brand Cards */}
             <div className="px-6 mt-6 pb-12">
                 {loading ? (
-                    <div className="flex justify-center py-20">
-                        <div className="animate-spin h-12 w-12 border-b-2 border-white rounded-full"></div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 animate-pulse">
+                        {Array.from({ length: 8 }).map((_, i) => (
+                            <div key={i} className="h-40 bg-gray-600 rounded-lg" />
+                        ))}
                     </div>
                 ) : filteredBrands.length === 0 ? (
                     <p className="text-center py-20 text-gray-400">No brands found</p>

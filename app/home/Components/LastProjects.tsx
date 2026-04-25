@@ -43,7 +43,7 @@ export default function LastProjects() {
     };
 
     return (
-        <section className="min-h-screen bg-[#3A3A3A] py-12 px-4 sm:px-6 lg:px-8">
+        <section className="bg-brand-dark min-h-screen py-12 px-4 sm:px-6 lg:px-8">
             {/* Header Section */}
             <div className="max-w-7xl mx-auto mb-16">
                 <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
@@ -58,13 +58,13 @@ export default function LastProjects() {
                                 Making your home uniquely yours.
                             </p>
                             <Link href="/projects">
-  <button className="bg-[#F7931E] hover:bg-[#fba63c] text-white rounded-full px-6 py-2 text-sm font-medium transition-all hover:scale-105">
+    <button className="bg-brand-primary hover-bg-brand-primary-hover rounded-full px-6 py-2 text-sm font-medium text-white transition-all hover:scale-105">
     View more
   </button>
 </Link>
                         </div>
                     </div>
-                    <h1 className="text-[150px] leading-none font-bold text-white/10">
+                    <h1 className="text-[64px] sm:text-[100px] md:text-[150px] leading-none font-bold text-white/10">
                         Project
                     </h1>
                 </div>
@@ -77,7 +77,7 @@ export default function LastProjects() {
                         [...Array(4)].map((_, i) => (
                             <div
                                 key={i}
-                                className="bg-[#F6F0E8] rounded-3xl overflow-hidden shadow-lg animate-pulse"
+                                className="bg-brand-surface rounded-3xl overflow-hidden shadow-lg animate-pulse"
                             >
                                 <div className="flex flex-col sm:flex-row h-full">
                                     <div className="sm:w-1/2 bg-gray-200 h-64 sm:h-auto"></div>
@@ -96,7 +96,7 @@ export default function LastProjects() {
                                 href={`/projectdetail?id=${project.project_id}`}
                                 className="block"
                             >
-                                <div className="bg-[#F6F0E8] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer group">
+                                <div className="bg-brand-surface rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer group">
                                     <div className="flex flex-col sm:flex-row h-full">
                                         {/* Project Image */}
                                         <div className="sm:w-1/2 relative overflow-hidden h-64 sm:h-80">
@@ -108,25 +108,25 @@ export default function LastProjects() {
                                         </div>
 
                                         {/* Project Info */}
-                                        <div className="sm:w-1/2 p-6 sm:p-8 bg-[#F6F0E8] flex flex-col justify-between relative">
+                                        <div className="bg-brand-surface sm:w-1/2 p-6 sm:p-8 flex flex-col justify-between relative">
                                             <div className="space-y-4">
                                                 <div className="flex items-start gap-2">
-                                                    <MapPin className="w-5 h-5 text-[#3A3A3A]/60 flex-shrink-0 mt-0.5" />
+                                                    <MapPin className="text-brand-dark-60 mt-0.5 h-5 w-5 shrink-0" />
                                                     <div>
-                                                        <h3 className="text-lg font-semibold text-[#3A3A3A]">
+                                                        <h3 className="text-brand-dark text-lg font-semibold">
                                                             {project.project_name}
                                                         </h3>
-                                                        <p className="text-sm text-[#3A3A3A]/60">
+                                                        <p className="text-brand-dark-60 text-sm">
                                                             {formatDate(project.data_update)}
                                                         </p>
                                                     </div>
                                                 </div>
 
-                                                <div className="pt-4 border-t border-[#3A3A3A]/10">
-                                                    <p className="text-sm font-medium text-[#3A3A3A] mb-1">
+                                                <div className="border-brand-dark-10 pt-4 border-t">
+                                                    <p className="text-brand-dark mb-1 text-sm font-medium">
                                                         Primary Material
                                                     </p>
-                                                    <p className="text-sm text-[#3A3A3A]/70">
+                                                    <p className="text-brand-dark-70 text-sm">
                                                         {project.project_category}
                                                     </p>
                                                 </div>
@@ -138,8 +138,8 @@ export default function LastProjects() {
                                                     <div
                                                         key={i}
                                                         className={`h-1.5 rounded-full transition-all ${i === 0
-                                                                ? "w-8 bg-[#F7931E]"
-                                                                : "w-1.5 bg-[#3A3A3A]/30"
+                                                                ? "bg-brand-primary w-8"
+                                                                : "text-brand-dark-30 w-1.5 bg-current"
                                                             }`}
                                                     />
                                                 ))}
