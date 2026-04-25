@@ -39,7 +39,9 @@ export default function AboutPage() {
                                     src="/static/DSC09202.webp"
                                     alt="Interior 1"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     className="object-cover rounded-lg"
+                                    priority
                                 />
                             </div>
 
@@ -48,6 +50,7 @@ export default function AboutPage() {
                                     src="/static/DSC09178-HDR.webp"
                                     alt="Interior 2"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     className="object-cover rounded-lg"
                                 />
                             </div>
@@ -84,6 +87,7 @@ export default function AboutPage() {
                                     src="/static/DSC09181.webp"
                                     alt="Interior 3"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     className="object-cover rounded-lg"
                                 />
                             </div>
@@ -134,6 +138,7 @@ export default function AboutPage() {
                                 src="/static/map.png"
                                 alt="Map location"
                                 fill
+                                sizes="(max-width: 768px) 100vw, 66vw"
                                 className="object-cover rounded-lg"
                             />
                         </div>
