@@ -14,6 +14,7 @@ import {
     Popconfirm,
     Image,
     Upload,
+    Tabs,
 } from 'antd';
 import {
     PlusOutlined,
@@ -85,6 +86,7 @@ export default function ProjectsPage() {
     const [filterType, setFilterType] = useState<string | null>(null);
     const [filterMaterialType, setFilterMaterialType] = useState<string | null>(null);
     const [collectionTablePage, setCollectionTablePage] = useState(1);
+    const [collectionTab, setCollectionTab] = useState<'all' | 'selected'>('all');
 
     // ✅ Add/Edit Project
     const showModal = (project?: Project) => {
@@ -165,6 +167,7 @@ export default function ProjectsPage() {
         setCollectionModalOpen(false);
         setInitialSelectedCollections([]);
         setCollectionTablePage(1);
+        setCollectionTab('all');
     };
 
     useEffect(() => {
@@ -412,7 +415,19 @@ export default function ProjectsPage() {
                 onCancel={handleCloseCollectionsModal}
                 width={1000}
             >
-                <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                <Tabs
+                    activeKey={collectionTab}
+                    onChange={(key) => {
+                        setCollectionTab(key as 'all' | 'selected');
+                        setCollectionTablePage(1);
+                    }}
+                    items={[
+                        { key: 'all', label: 'All Collections' },
+                        { key: 'selected', label: `Selected (${selectedCollections.length})` },
+                    ]}
+                    style={{ marginBottom: 12 }}
+                />
+                {collectionTab === 'all' && <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
                     <Input
                         placeholder="Search by collection name, brand, type, or material..."
                         value={searchText}
@@ -459,15 +474,19 @@ export default function ProjectsPage() {
                             </Option>
                         ))}
                     </Select>
-                </div>
+                </div>}
 
                 <Table
                     rowKey="collection_id"
-                    dataSource={sortedCollections}
+                    dataSource={collectionTab === 'selected'
+                        ? collections.filter((c) => selectedCollections.includes(c.collection_id))
+                        : sortedCollections
+                    }
                     columns={collectionColumns}
                     rowSelection={{
                         selectedRowKeys: selectedCollections,
                         onChange: (keys) => setSelectedCollections(keys as number[]),
+                        hideSelectAll: true,
                     }}
                     pagination={{
                         pageSize: 8,

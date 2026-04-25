@@ -39,6 +39,8 @@ function ProjectDetailContent() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+    const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
     const handleCollectionClick = (c: Collection) => {
         const linkToOpen = c.status ? c.link : c.relate_link;
         openExternalLink(linkToOpen);
@@ -346,6 +348,9 @@ function ProjectDetailContent() {
                                 <tr
                                     key={c.collection_id}
                                     onClick={() => handleCollectionClick(c)}
+                                    onMouseEnter={() => setHoveredImage(c.image)}
+                                    onMouseLeave={() => setHoveredImage(null)}
+                                    onMouseMove={(e) => setTooltipPos({ x: e.clientX, y: e.clientY })}
                                     className="border-b border-gray-700 hover:bg-gray-700 cursor-pointer transition"
                                 >
                                     <td className="px-4 py-2">{c.collection_name}</td>
@@ -360,6 +365,16 @@ function ProjectDetailContent() {
                     </table>
                 </div>
             </div>
+
+            {/* Hover image tooltip */}
+            {hoveredImage && (
+                <div
+                    className="fixed z-50 pointer-events-none rounded-lg overflow-hidden shadow-2xl border-2 border-primary"
+                    style={{ top: tooltipPos.y + 16, left: tooltipPos.x + 16, width: 200, height: 140 }}
+                >
+                    <img src={hoveredImage} alt="" className="w-full h-full object-cover" />
+                </div>
+            )}
 
         </div>
     );

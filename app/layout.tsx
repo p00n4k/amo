@@ -27,6 +27,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <html>
+      <head>
+        <link rel="icon" href="/static/amo.ico" />
+      </head>
       <body className={`${poppins.className} bg-white relative`}>
         {/* ✅ แสดงเฉพาะหน้าที่ไม่ซ่อน */}
         {!hideNavbar && (
