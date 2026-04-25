@@ -36,7 +36,7 @@ export default function AboutPage() {
                         <div className="space-y-8">
                             <div className="relative w-full aspect-[4/3]">
                                 <Image
-                                    src="/static/DSC09202.jpg"
+                                    src="/static/DSC09202.webp"
                                     alt="Interior 1"
                                     fill
                                     className="object-cover rounded-lg"
@@ -45,7 +45,7 @@ export default function AboutPage() {
 
                             <div className="relative w-full aspect-[4/3]">
                                 <Image
-                                    src="/static/DSC09178-HDR.jpg"
+                                    src="/static/DSC09178-HDR.webp"
                                     alt="Interior 2"
                                     fill
                                     className="object-cover rounded-lg"
@@ -81,7 +81,7 @@ export default function AboutPage() {
 
                             <div className="relative w-full aspect-[3/4]">
                                 <Image
-                                    src="/static/DSC09181.jpg"
+                                    src="/static/DSC09181.webp"
                                     alt="Interior 3"
                                     fill
                                     className="object-cover rounded-lg"
