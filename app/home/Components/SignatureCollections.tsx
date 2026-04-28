@@ -230,21 +230,21 @@ export default function SignatureCollections() {
                 target="_blank"
                 className="inline-block text-primary border border-primary rounded-full px-5 py-2 text-sm hover:bg-primary hover:text-white transition"
               >
-                Visit Collection ↗
+                Visit Collection <Image src="/static/rightup.svg" alt="" width={12} height={12} className="inline" />
               </Link>
 
               <div className="flex gap-2 mt-8">
                 <button
                   onClick={() => go(-1)}
-                  className="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-primary hover:text-primary transition"
+                  className="p-2 rounded-full border border-gray-300 hover:border-primary transition"
                 >
-                  ←
+                  <Image src="/static/left.svg" alt="prev" width={24} height={24} />
                 </button>
                 <button
                   onClick={() => go(1)}
-                  className="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:border-primary hover:text-primary transition"
+                  className="p-2 rounded-full border border-gray-300 hover:border-primary transition"
                 >
-                  →
+                  <Image src="/static/right.svg" alt="next" width={24} height={24} />
                 </button>
               </div>
             </div>

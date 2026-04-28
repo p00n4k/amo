@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { LibraryBig } from "lucide-react";
 import Link from 'next/link';
 
@@ -256,8 +257,8 @@ function ProjectDetailContent() {
                                 <img key={i} src={img} alt="" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`} />
                             ))}
                             {/* Mobile prev/next controls */}
-                            <button type="button" onClick={prevSlide} className="md:hidden absolute left-2 top-1/2 -translate-y-1/2 text-white text-3xl z-20 bg-black/40 rounded-full px-2 py-0.5">‹</button>
-                            <button type="button" onClick={nextSlide} className="md:hidden absolute right-2 top-1/2 -translate-y-1/2 text-white text-3xl z-20 bg-black/40 rounded-full px-2 py-0.5">›</button>
+                            <button type="button" onClick={prevSlide} className="md:hidden absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/40 rounded-full p-2"><Image src="/static/left.svg" alt="prev" width={24} height={24} /></button>
+                            <button type="button" onClick={nextSlide} className="md:hidden absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/40 rounded-full p-2"><Image src="/static/right.svg" alt="next" width={24} height={24} /></button>
                         </div>
 
                         <div className="hidden md:block w-1/4 h-64 rounded-lg overflow-hidden opacity-50 cursor-pointer transition-all hover:opacity-70" onClick={nextSlide}>

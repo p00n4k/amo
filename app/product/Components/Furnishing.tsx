@@ -41,8 +41,8 @@ const Furnishing = () => {
         <>
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-all duration-300" />
 
-            <div className="absolute top-3 right-3 bg-white/20 rounded-full px-3 py-1 text-white text-sm backdrop-blur-sm group-hover:scale-105 transition">
-                ↗
+            <div className="absolute top-3 right-3 bg-white/20 rounded-full p-2 backdrop-blur-sm group-hover:scale-105 transition">
+                <Image src="/static/rightup.svg" alt="open" width={16} height={16} className="invert" />
             </div>
 
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300">

@@ -90,24 +90,24 @@ export default function HomeSlider() {
                         <>
                             <button
                                 onClick={goToPrevious}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full z-10 transition"
+                                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full z-10 transition"
                                 aria-label="Previous slide"
                             >
-                                ←
+                                <Image src="/static/left.svg" alt="prev" width={24} height={24} />
                             </button>
                             <button
                                 onClick={goToNext}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full z-10 transition"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full z-10 transition"
                                 aria-label="Next slide"
                             >
-                                →
+                                <Image src="/static/right.svg" alt="next" width={24} height={24} />
                             </button>
                         </>
                     )}
 
                     {/* จุด Indicator */}
                     {images.length > 1 && (
-                        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-10">
                             {images.map((_, index) => (
                                 <button
                                     key={index}
@@ -121,6 +121,36 @@ export default function HomeSlider() {
                             ))}
                         </div>
                     )}
+
+                    {/* Scroll-down hint */}
+                    <button
+                        type="button"
+                        onClick={() =>
+                            window.scrollTo({
+                                top: window.innerHeight,
+                                behavior: "smooth",
+                            })
+                        }
+                        className="scroll-indicator absolute bottom-6 left-1/2 z-10 flex flex-col items-center gap-1 text-white/90 hover:text-white"
+                        aria-label="Scroll to next section"
+                    >
+                        <span className="text-[10px] tracking-[0.3em] uppercase">
+                            Scroll
+                        </span>
+                        <svg
+                            className="scroll-chevron"
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </button>
                 </>
             )}
         </div>

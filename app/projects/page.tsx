@@ -247,17 +247,17 @@ const ProjectPage = () => {
                         {/* Left Arrow */}
                         <button
                             onClick={prevSlide}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl z-50 bg-black/40 rounded-full px-3 py-1 hover:bg-black/60 transition"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-black/40 rounded-full p-3 hover:bg-black/60 transition"
                         >
-                            ‹
+                            <Image src="/static/left.svg" alt="prev" width={24} height={24} />
                         </button>
 
                         {/* Right Arrow */}
                         <button
                             onClick={nextSlide}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl z-50 bg-black/40 rounded-full px-3 py-1 hover:bg-black/60 transition"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-black/40 rounded-full p-3 hover:bg-black/60 transition"
                         >
-                            ›
+                            <Image src="/static/right.svg" alt="next" width={24} height={24} />
                         </button>
                     </div>
                 </div>

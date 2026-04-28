@@ -104,9 +104,9 @@ export default function ProductPage() {
                                         product.images.length
                                 )
                             }
-                            className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20 hover:text-gray-300"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20"
                         >
-                            ‹
+                            <Image src="/static/left.svg" alt="prev" width={24} height={24} />
                         </button>
 
                         <button
@@ -115,9 +115,9 @@ export default function ProductPage() {
                                     (prev) => (prev + 1) % product.images.length
                                 )
                             }
-                            className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20 hover:text-gray-300"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20"
                         >
-                            ›
+                            <Image src="/static/right.svg" alt="next" width={24} height={24} />
                         </button>
                     </>
                 )}
